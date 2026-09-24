@@ -1,0 +1,34 @@
+id: case-101
+name: case-101
+category: requirements
+severity: major
+prompt: 'Составь JSON-таблицу проблем требований: массив объектов с ключами requirement,
+  issue, question. Верни только JSON.'
+execution:
+  mode: text
+  output_path: issues.json
+inputs:
+- inputs/requirements.md
+reference:
+- reference/answer.md
+expected_outputs:
+- path: issues.json
+  required: true
+checks:
+- type: json_valid
+  path: issues.json
+- type: contains
+  path: issues.json
+  text: '"requirement"'
+- type: contains
+  path: issues.json
+  text: '"issue"'
+- type: contains
+  path: issues.json
+  text: '"question"'
+rubric:
+  criteria:
+  - name: source_fidelity
+    points: 60
+  - name: usable_artifact
+    points: 40

@@ -1,0 +1,72 @@
+skill:
+  path: skill/requirements-analysis/SKILL.md
+
+dataset:
+  path: dataset/example/dev
+  holdout_path: dataset/example/holdout
+
+models:
+- name: qwen
+  provider: openrouter
+  model: qwen/qwen3.8-27b:free
+
+runs_per_case: 1
+
+generation:
+  temperature: 0.2
+  max_tokens: 4096
+
+judge:
+  model: qwen/qwen3.8-27b:free
+  temperature: 0.0
+  max_tokens: 2048
+  provider: openrouter
+  max_artifact_chars: 200000
+
+results_dir: runs/dev/requirements-analysis
+
+aggregation:
+  confidence_level: 0.95
+  gates:
+    min_score_mean: 80
+    min_checks_pass_rate: 1.0
+
+output_language: ru
+
+providers:
+  openrouter:
+    max_retries: 5
+    backoff_seconds: 5
+    max_retry_wait_seconds: 60
+    timeout: 300
+  codex:
+    executable: codex
+    timeout: 600
+
+error_analysis:
+  weak_criterion: 80
+  low_score: 80
+  high_stddev: 10
+  recurring_count: 2
+
+lifecycle:
+  versions_dir: skill_versions
+  runs_dir: runs
+  releases_dir: releases
+  previous_version: v0
+  candidate_version: v1
+
+optimization:
+  provider: openrouter
+  model: nvidia/nemotron-3-ultra-550b-a55b:free
+  temperature: 0.2
+  max_tokens: 4096
+
+regression:
+  max_score_drop: 0
+  max_criterion_drop: 0
+  max_checks_drop: 0
+  max_stddev_increase: 10
+
+release:
+  require_expert_review: true

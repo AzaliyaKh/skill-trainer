@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+*token*
+runs/
+skill_versions/
+releases/
+gpt_token.txt
+openrouter_token
