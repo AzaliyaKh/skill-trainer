@@ -5,8 +5,3 @@ __pycache__/
 .env.*
 !.env.example
 *token*
-runs/
-skill_versions/
-releases/
-gpt_token.txt
-openrouter_token

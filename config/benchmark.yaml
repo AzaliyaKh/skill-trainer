@@ -2,13 +2,19 @@ skill:
   path: skill/requirements-analysis/SKILL.md
 
 dataset:
-  path: dataset/example/dev
-  holdout_path: dataset/example/holdout
+  path: dataset/amc/dev
+  holdout_path: dataset/amc/holdout
 
 models:
-- name: qwen
-  provider: openrouter
-  model: qwen/qwen3.8-27b:free
+- name: gpt-5-6-sol
+  provider: codex
+  model: gpt-5.6-sol
+- name: gpt-5-6-terra
+  provider: codex
+  model: gpt-5.6-terra
+- name: gpt-5-6-luna
+  provider: codex
+  model: gpt-5.6-luna
 
 runs_per_case: 1
 
@@ -17,11 +23,11 @@ generation:
   max_tokens: 4096
 
 judge:
-  model: qwen/qwen3.8-27b:free
+  model: gpt-5.6-luna
   temperature: 0.0
   max_tokens: 2048
-  provider: openrouter
-  max_artifact_chars: 200000
+  provider: codex
+  max_artifact_chars: 500000
 
 results_dir: runs/dev/requirements-analysis
 
@@ -50,15 +56,15 @@ error_analysis:
   recurring_count: 2
 
 lifecycle:
-  versions_dir: skill_versions
+  versions_dir: skill/versions
   runs_dir: runs
   releases_dir: releases
-  previous_version: v0
-  candidate_version: v1
+  previous_version: v3
+  candidate_version: v4
 
 optimization:
-  provider: openrouter
-  model: nvidia/nemotron-3-ultra-550b-a55b:free
+  provider: codex
+  model: gpt-5.6-sol
   temperature: 0.2
   max_tokens: 4096
 

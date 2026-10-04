@@ -1,0 +1,178 @@
+{
+  "cases": {
+    "case-206": {
+      "gpt-5.6-luna": {
+        "has_errors": false,
+        "issues": [],
+        "failed_checks": {},
+        "judge_reasoning": {
+          "source_fidelity_and_completeness": [
+            {
+              "run": "run-01",
+              "name": "source_fidelity_and_completeness",
+              "score": 36,
+              "max_score": 40,
+              "reasoning": "Основные требования, численные параметры и ограничения отражены полно, но утрачены некоторые исходные реквизиты и точное наименование исполнителя, а часть терминов ошибочно оставлена как неуточнённая."
+            }
+          ],
+          "architecture_interfaces_and_behavior": [
+            {
+              "run": "run-01",
+              "name": "architecture_interfaces_and_behavior",
+              "score": 24,
+              "max_score": 25,
+              "reasoning": "Аппаратные узлы, B2B, MMC, Fabric/Base, питание, синхронизация, загрузка и взаимодействие с Carrier и субплатами разделены и согласованы."
+            }
+          ],
+          "safety_diagnostics_and_verification": [
+            {
+              "run": "run-01",
+              "name": "safety_diagnostics_and_verification",
+              "score": 19,
+              "max_score": 20,
+              "reasoning": "Аварийные состояния, Golden Image/Fallback, PS1#, диагностика, сохранение работы MMC и измеримые процедуры приёмки описаны достаточно полно."
+            }
+          ],
+          "structure_and_gap_handling": [
+            {
+              "run": "run-01",
+              "name": "structure_and_gap_handling",
+              "score": 14,
+              "max_score": 15,
+              "reasoning": "Документ хорошо структурирован и содержит критерии приёмки и открытые вопросы, однако некоторые известные из reference сведения ошибочно оформлены как неопределённые."
+            }
+          ]
+        },
+        "runs": [
+          {
+            "run": "run-01",
+            "score": 93.0
+          }
+        ]
+      },
+      "gpt-5.6-sol": {
+        "has_errors": false,
+        "issues": [],
+        "failed_checks": {},
+        "judge_reasoning": {
+          "source_fidelity_and_completeness": [
+            {
+              "run": "run-01",
+              "name": "source_fidelity_and_completeness",
+              "score": 37,
+              "max_score": 40,
+              "reasoning": "Основные требования, численные параметры, стандарты и ограничения отражены полно, но сокращены полное наименование и отдельная формулировка цели ОКР."
+            }
+          ],
+          "architecture_interfaces_and_behavior": [
+            {
+              "run": "run-01",
+              "name": "architecture_interfaces_and_behavior",
+              "score": 24,
+              "max_score": 25,
+              "reasoning": "Аппаратные компоненты, двухплатная архитектура, B2B, MMC, сетевые каналы, загрузка, питание и синхронизация разделены и согласованы."
+            }
+          ],
+          "safety_diagnostics_and_verification": [
+            {
+              "run": "run-01",
+              "name": "safety_diagnostics_and_verification",
+              "score": 19,
+              "max_score": 20,
+              "reasoning": "Аварийные режимы, fallback, PS1#, диагностика, производственный контроль и измеримые критерии приемки покрыты практически полностью."
+            }
+          ],
+          "structure_and_gap_handling": [
+            {
+              "run": "run-01",
+              "name": "structure_and_gap_handling",
+              "score": 15,
+              "max_score": 15,
+              "reasoning": "Документ хорошо структурирован, требования прослеживаются через критерии приемки, а неопределенности явно вынесены в открытые вопросы."
+            }
+          ]
+        },
+        "runs": [
+          {
+            "run": "run-01",
+            "score": 95.0
+          }
+        ]
+      },
+      "gpt-5.6-terra": {
+        "has_errors": false,
+        "issues": [],
+        "failed_checks": {},
+        "judge_reasoning": {
+          "source_fidelity_and_completeness": [
+            {
+              "run": "run-01",
+              "name": "source_fidelity_and_completeness",
+              "score": 34,
+              "max_score": 40,
+              "reasoning": "Основные требования и числовые параметры переданы полно, но утрачены явно заданные исполнитель и часть определений, а разделы цели, нормативных документов и терминов сокращены или представлены как неопределённые."
+            }
+          ],
+          "architecture_interfaces_and_behavior": [
+            {
+              "run": "run-01",
+              "name": "architecture_interfaces_and_behavior",
+              "score": 23,
+              "max_score": 25,
+              "reasoning": "Архитектура двухплатного AMC-модуля, B2B, MMC, Fabric/Base, питание, синхронизация и режимы загрузки описаны согласованно, хотя часть связей и назначений из reference опущена."
+            }
+          ],
+          "safety_diagnostics_and_verification": [
+            {
+              "run": "run-01",
+              "name": "safety_diagnostics_and_verification",
+              "score": 18,
+              "max_score": 20,
+              "reasoning": "Fallback, PS1#, E-Keying, независимость MMC, диагностика и измеримые приёмочные критерии предусмотрены, но упаковка, материалы, нормативное соответствие и часть метрологических требований проверяются неполно."
+            }
+          ],
+          "structure_and_gap_handling": [
+            {
+              "run": "run-01",
+              "name": "structure_and_gap_handling",
+              "score": 14,
+              "max_score": 15,
+              "reasoning": "Документ хорошо структурирован, содержит трассируемые критерии приёмки и отдельные открытые вопросы, однако некоторые известные из reference сведения ошибочно помечены как не заданные."
+            }
+          ]
+        },
+        "runs": [
+          {
+            "run": "run-01",
+            "score": 89.0
+          }
+        ]
+      }
+    }
+  },
+  "provenance": {
+    "split": "holdout",
+    "skill_digest": "7d65fabd56d5647371c5fa5baa1371db290d1b9cc0245b2cb221263e72d8c5f2",
+    "dataset_digest": "c0039c80fb9b041fccdebc16734eeca2fe0e696f6609bafe7db623f40a7be45e",
+    "dataset_path": "/home/shifu/projects/skill-trainer/dataset/amc/holdout",
+    "settings_digest": "292fff05f7bb2b81fb8e8198deacaa0d09e0bdf618d5e38c97134b4052ec377b",
+    "expected_runs": [
+      {
+        "case_id": "case-206",
+        "model": "gpt-5.6-sol",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-206",
+        "model": "gpt-5.6-terra",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-206",
+        "model": "gpt-5.6-luna",
+        "run_id": "run-01"
+      }
+    ]
+  },
+  "missing_runs": []
+}

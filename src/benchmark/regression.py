@@ -1,9 +1,9 @@
-"""Compare previous and candidate Skill versions on the same DEV dataset."""
+"""Compare already generated DEV results for two Skill versions."""
+import shutil
 import statistics
 from pathlib import Path
 
-from .benchmark import evaluate_dataset
-from .storage import cli_config, lifecycle_paths, write_json, digest_tree, digest_json
+from .storage import identifier, lifecycle_paths, load_config, read_json, write_json, digest_tree, digest_json
 
 
 def _groups(summary):
@@ -50,24 +50,103 @@ def compare(previous, candidate, policy):
             "critical_regressions": critical, "applied_gates": policy}
 
 
-def run_regression(config, providers=None):
+def regression_report_path(config, from_version, to_version):
     paths = lifecycle_paths(config)
+    legacy = paths["regression"] / "regression.json"
+    if legacy.is_file():
+        report = read_json(legacy)
+        if (report.get("previous_version"), report.get("candidate_version")) == (from_version, to_version):
+            return legacy
+    return paths["regression"] / f"{from_version}-to-{to_version}" / "regression.json"
+
+
+def _materialize_legacy_results(config, paths, version):
+    """Preserve and expose pre-versioned DEV evidence without running a benchmark."""
+    destination = paths["regression"] / version
+    if (destination / "summary.json").is_file() or version != paths["previous"]:
+        return
+    source = Path(config["results_dir"])
+    if not (source / "summary.json").is_file() or not (source / "benchmark.json").is_file():
+        return
+    destination.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(source, destination / "raw", ignore=shutil.ignore_patterns("summary.json", "error_analysis.json"))
+    shutil.copy2(source / "summary.json", destination / "summary.json")
+    if (source / "error_analysis.json").is_file():
+        shutil.copy2(source / "error_analysis.json", destination / "error_analysis.json")
+
+
+def run_regression(config, from_version=None, to_version=None, providers=None):
+    paths = lifecycle_paths(config)
+    from_version = identifier(from_version or paths["previous"])
+    to_version = identifier(to_version or paths["candidate"])
+    if from_version == to_version:
+        raise ValueError("Regression versions must differ")
     root = paths["regression"]
-    if (root / "regression.json").exists():
-        raise FileExistsError("Regression report already exists; use a new version pair/results root")
+    report_path = regression_report_path(config, from_version, to_version)
+    if report_path.is_file():
+        return read_json(report_path)
     summaries = []
-    for version, skill in ((paths["previous"], paths["old_skill"]), (paths["candidate"], paths["new_skill"])):
-        summaries.append(evaluate_dataset(config, skill, Path(config["dataset"]["path"]), root / version, "dev", providers))
-    result = compare(*summaries, config["regression"])
-    result.update({"skill_name": paths["name"], "previous_version": paths["previous"], "candidate_version": paths["candidate"],
-                   "previous_digest": digest_tree(paths["old_skill"]), "candidate_digest": digest_tree(paths["new_skill"]),
-                   "evidence_digest": digest_json({v: digest_tree(root / v) for v in (paths["previous"], paths["candidate"])})})
-    write_json(root / "regression.json", result)
+    for version in (from_version, to_version):
+        _materialize_legacy_results(config, paths, version)
+        summary_path = root / version / "summary.json"
+        skill = Path(config["lifecycle"]["versions_dir"]) / paths["name"] / version
+        if not summary_path.is_file():
+            raise RuntimeError(f"Missing summary for {version}; run make aggregate VERSION={version}")
+        if not skill.is_dir():
+            raise FileNotFoundError(f"Skill version does not exist: {skill}")
+        summary = read_json(summary_path)
+        if (summary.get("complete") is not True or
+                summary.get("provenance", {}).get("skill_digest") != digest_tree(skill)):
+            raise ValueError(f"DEV evidence does not match immutable Skill {version}")
+        summaries.append(summary)
+    previous, candidate = summaries
+    result = compare(previous, candidate, config["regression"])
+    versions = Path(config["lifecycle"]["versions_dir"]) / paths["name"]
+    result.update({"skill_name": paths["name"], "previous_version": from_version, "candidate_version": to_version,
+                   "previous_digest": digest_tree(versions / from_version),
+                   "candidate_digest": digest_tree(versions / to_version),
+                   "evidence_digest": digest_json({v: digest_tree(root / v) for v in (from_version, to_version)})})
+    write_json(report_path, result)
     return result
 
 
+def print_verdict(config, result):
+    if result["passed"]:
+        print("Regression пройдена: кандидат принят как улучшение.")
+        return
+    print("Regression не пройдена: кандидат не принят как улучшение.")
+    paths = lifecycle_paths(config)
+    previous_version = result.get("previous_version", paths["previous"])
+    candidate_version = result.get("candidate_version", paths["candidate"])
+    previous = _groups(read_json(paths["regression"] / previous_version / "summary.json"))
+    candidate = _groups(read_json(paths["regression"] / candidate_version / "summary.json"))
+    declines = [row for row in result.get("comparisons", []) if row.get("score_delta") is not None
+                and row["score_delta"] < 0]
+    if declines:
+        print("Снижение общей оценки:")
+        for number, row in enumerate(declines, 1):
+            key = (row["case_id"], row["model"])
+            before = previous[key]["score"]["mean"]
+            after = candidate[key]["score"]["mean"]
+            label = row["model"].rsplit("-", 1)[-1].capitalize()
+            print(f"{number}. {row['case_id']} / {label}: {before:g} → {after:g}.")
+    other = len(result.get("critical_regressions", [])) - len(declines)
+    if other > 0:
+        print(f"Дополнительно заблокировано сравнений из-за критериев, checks или quality gates: {other}.")
+    print(f"Полный отчёт: {regression_report_path(config, previous_version, candidate_version)}")
+
+
 def main():
-    if not run_regression(cli_config())["passed"]:
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", default="config/benchmark.yaml")
+    parser.add_argument("--from-version", required=True)
+    parser.add_argument("--to-version", required=True)
+    args = parser.parse_args()
+    config = load_config(args.config)
+    result = run_regression(config, args.from_version, args.to_version)
+    print_verdict(config, result)
+    if not result["passed"]:
         raise SystemExit(1)
 
 

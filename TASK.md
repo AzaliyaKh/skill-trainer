@@ -1,101 +1,118 @@
-Analyze the project structure after refactoring and create a new file:
+# Task: Normalize dataset requirements and case files
 
-`ARCHITECTURE.md`
+Read and follow `AGENTS.md`.
 
-Do not modify the existing code.
+Review the existing dataset cases. Do not rewrite the framework unless a dataset inconsistency reveals a small required fix.
 
-The file must be written in Russian and contain:
+## Goal
 
-1. Project structure
+Normalize every case so that:
+- `inputs/requirements.md` is a clean task specification derived from the case source/reference materials;
+- `case.yaml` follows the project dataset contract;
+- references remain hidden from the tested model;
+- generated user-facing artifacts are in Russian by default.
 
-* Show the relevant directory tree.
-* Include only important source/config files that are actually used.
-* Briefly explain the purpose of each important file.
+Process all applicable `case-*` directories under the repository dataset structure (DEV and HOLDOUT if present).
 
-2. Script dependency trees
-   Show which internal project scripts/modules depend on each other.
+## requirements.md rules
 
-Example:
+For every case, inspect the existing inputs and reference files and rewrite `inputs/requirements.md` when needed.
 
-```text
-benchmark.py
-├── runner.py
-│   ├── case.py
-│   └── provider.py
-├── checks.py
-│   └── case.py
-└── evaluator.py
-    ├── case.py
-    └── provider.py
-```
+`requirements.md` must:
+- be written in Russian;
+- describe the task goal and the required result;
+- contain only information supported by the case materials;
+- list the required document/output sections;
+- briefly explain what each required section must contain;
+- include all important technical facts, numbers, units, constraints, interfaces, standards, and mandatory requirements needed to solve the task;
+- explicitly identify which sections are required when an input GOST/standard contains sections that are not applicable;
+- define the required output format and language;
+- state constraints such as when applicable;
+- be concise enough to serve as input to a model, but complete enough to reproduce the intended result.
 
-Create such trees for all main project entry points/stages.
+`requirements.md` must NOT:
+- copy the reference answer verbatim as a ready-made solution;
+- expose `reference/` paths or tell the tested model that a reference answer exists;
+- include evaluator scores, rubric points, gates, or benchmark internals;
+- include unsupported facts;
+- include model/provider-specific instructions;
+- include unnecessary GOST sections that are not required for the specific task.
 
-Do not include standard-library or external-package imports.
+The reference file is the source of truth for deriving expected content, but it must remain hidden during benchmark execution.
 
-3. Function dependency trees
-   For every important script, show:
+## case.yaml rules
 
-* functions defined in the file;
-* which functions call other functions;
-* imported internal functions they use;
-* execution flow from `main()` or another entry point.
+Review each existing `case.yaml` and modify it only if it does not conform.
 
-Example:
-
-```text
-benchmark.py
-
-main()
-└── run_benchmark()
-    ├── load_cases()
-    │   └── case.py: load_case()
-    ├── run_case()
-    │   ├── provider.py: generate()
-    │   └── checks.py: run_checks()
-    └── save_results()
-```
-
-4. Pipeline/data flow
-   Show how the project stages connect:
-
-```text
-DEV benchmark
-    ↓
-Aggregation
-    ↓
-Error analysis
-    ↓
-Skill improvement
-    ↓
-Regression
-    ↓
-Holdout
-    ↓
-Expert review
-```
-
-For each stage specify:
-
-* entry script;
-* input files;
-* output files;
-* next stage consuming the output.
-
-5. Architecture issues
-   List, without fixing:
-
-* duplicated responsibilities;
-* unused scripts;
-* unclear files;
-* unnecessary dependencies;
-* circular dependencies;
-* files that make the architecture harder to understand.
+It should describe:
+- `id`
+- `name`
+- `category`
+- `severity`
+- `output_language` (`ru` by default)
+- `prompt`
+- `execution.mode`
+- `inputs`
+- `reference`
+- `expected_outputs`
+- `checks`
+- `rubric`
 
 Requirements:
+- all paths must exist and be relative to the case directory;
+- `inputs` must include only files visible to the tested model;
+- `reference` must include only hidden evaluator/reference files;
+- never copy reference files into inputs;
+- use `execution.mode: agent` for tasks that must read/write binary artifacts such as DOCX/PDF or create output files;
+- use `text` only when plain-text execution is sufficient;
+- `expected_outputs` must describe the real required artifact(s);
+- deterministic checks must be feasible and relevant;
+- rubric criteria must be specific to the task and must not rely on globally hardcoded criterion names;
+- rubric points should have a clear total (prefer 100 unless the existing project contract requires otherwise);
+- the case prompt should describe the action, while detailed domain requirements belong in `requirements.md`;
+- avoid duplicating the entire `requirements.md` inside `case.yaml`.
 
-* Base the report on the actual current code, not assumptions.
-* Follow `AGENTS.md` when interpreting project stages.
-* Do not create any files except `ARCHITECTURE.md`.
-* Do not refactor or modify source files.
-* Keep the report concise but complete.
+For technical-specification cases, prefer rubric dimensions such as:
+- requirements coverage;
+- technical accuracy;
+- structure/completeness;
+- document quality.
+
+Use different criteria when another task type requires them.
+
+## GOST / standards
+
+If a case contains a GOST or another standard in `inputs/`:
+- keep the standard as an input if the tested model is expected to use it;
+- do not ask the model to blindly reproduce every section from the standard;
+- use `requirements.md` to state which sections are required for this case and briefly describe the expected content;
+- preserve requirements supported by the source materials without inventing missing ones.
+
+## Safety against data leakage
+
+Verify that no tested-model prompt, input file, runner-generated prompt, or workspace input contains:
+- the reference answer;
+- reference file contents;
+- evaluator reasoning;
+- benchmark scores.
+
+## Validation
+
+After editing:
+1. validate all YAML files;
+2. verify every referenced input/reference path exists;
+3. verify every case has `inputs/requirements.md`;
+4. ensure reference files were not modified unless strictly necessary for path/name consistency;
+5. run the existing dataset loader/validator via Makefile;
+6. run local deterministic/smoke checks only; do not spend API calls for this task.
+
+## Output
+
+Modify the dataset files in place.
+
+At the end, print a concise summary:
+- cases reviewed;
+- `requirements.md` files rewritten;
+- `case.yaml` files changed;
+- validation errors found/fixed;
+- remaining issues requiring human input.

@@ -1,0 +1,103 @@
+{
+  "skill_name": "requirements-analysis",
+  "from_version": "v2",
+  "to_version": "v3",
+  "changes": [
+    {
+      "problem": "Source fidelity remained imperfect because some source wording, purpose or application details, and abbreviation expansions were shortened or omitted.",
+      "change": "Added a source-order coverage checklist, explicit treatment of purpose and application text, and a completeness check for every abbreviation expansion.",
+      "reason": "A granular coverage inventory makes omissions visible before drafting and during the source-to-document traceability pass."
+    },
+    {
+      "problem": "Numeric meaning was occasionally changed, including converting discrete supported values into a continuous range.",
+      "change": "Added a dedicated numeric-semantics rule and a final check for values, units, inequalities, alternatives, inclusivity, tolerances, and relationships between neighboring numbers.",
+      "reason": "Numeric transcription requires preserving the source relationship, not merely copying the endpoint values."
+    },
+    {
+      "problem": "Generated documents sometimes introduced unsupported dimensions, extra requisites, repeated approvals, additional sections, or sample-derived formal pages.",
+      "change": "Turned the normative structure map into an explicit allowlist and added prohibitions and validation checks for unsupported physical attributes, duplicated formal elements, page furniture, and unrequested sections.",
+      "reason": "This prevents customary or sample-based content from expanding the requested and normatively applicable document scope."
+    },
+    {
+      "problem": "Some verification entries were too generic or deferred measurable criteria to a future test program even when observable results were available.",
+      "change": "Required concrete observable outcomes whenever supported, prohibited generic verification phrases as sole criteria, and required retention of all supported method fragments when only part of a procedure is missing.",
+      "reason": "This improves verification usefulness without encouraging invented thresholds or procedures."
+    },
+    {
+      "problem": "Introductory sections could become declarative summaries that lost source-supported scope, purpose, or operating context.",
+      "change": "Required introductory and purpose statements to enter the evidence ledger when they establish application, context, responsibility, or constraints.",
+      "reason": "These statements can carry material requirements even when they are not phrased as numbered technical obligations."
+    },
+    {
+      "problem": "The existing validation guidance did not explicitly challenge every added structural element or duplicated formal block.",
+      "change": "Expanded the document-to-source pass to trace structural elements and remove duplicated formal pages, redundant requirements, and unrequested sections.",
+      "reason": "Bidirectional traceability should cover document structure as well as factual and technical content."
+    }
+  ],
+  "source_digest": "ab3b2cb560a22300295ff522f2a4e830ae1ae49fa9771068115ae7839fb7dc29",
+  "candidate_digest": "90b25673a489d155766f0f94b1c6556772d3a657c63cfaf04d361ca01f914ada",
+  "dev_provenance": {
+    "split": "dev",
+    "skill_digest": "ab3b2cb560a22300295ff522f2a4e830ae1ae49fa9771068115ae7839fb7dc29",
+    "dataset_digest": "42e5a2be6feb06d1988f0afb74999a3b7a1f2c4c7701ec790b3c7d9c5dfc2fc4",
+    "dataset_path": "/home/shifu/projects/skill-trainer/dataset/amc/dev",
+    "settings_digest": "292fff05f7bb2b81fb8e8198deacaa0d09e0bdf618d5e38c97134b4052ec377b",
+    "expected_runs": [
+      {
+        "case_id": "case-201",
+        "model": "gpt-5.6-sol",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-201",
+        "model": "gpt-5.6-terra",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-201",
+        "model": "gpt-5.6-luna",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-202",
+        "model": "gpt-5.6-sol",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-202",
+        "model": "gpt-5.6-terra",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-202",
+        "model": "gpt-5.6-luna",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-203",
+        "model": "gpt-5.6-sol",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-203",
+        "model": "gpt-5.6-terra",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-203",
+        "model": "gpt-5.6-luna",
+        "run_id": "run-01"
+      }
+    ]
+  },
+  "apply_path": "/home/shifu/projects/skill-trainer/skill/requirements-analysis/SKILL.md",
+  "project_digest": "ab3b2cb560a22300295ff522f2a4e830ae1ae49fa9771068115ae7839fb7dc29",
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "skill_name": "requirements-analysis",
+    "skill_digest": "90b25673a489d155766f0f94b1c6556772d3a657c63cfaf04d361ca01f914ada"
+  },
+  "method": "model"
+}

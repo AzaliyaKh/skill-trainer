@@ -1,0 +1,12 @@
+{
+  "model": "gpt-5.6-sol",
+  "execution_mode": "agent",
+  "input_tokens": 729471,
+  "output_tokens": 14978,
+  "cost_usd": null,
+  "latency_seconds": 325.56280311699084,
+  "created_files": [
+    "answer.docx"
+  ],
+  "output_language": "ru"
+}

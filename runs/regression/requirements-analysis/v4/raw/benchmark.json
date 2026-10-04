@@ -1,0 +1,56 @@
+{
+  "split": "dev",
+  "skill_digest": "7d65fabd56d5647371c5fa5baa1371db290d1b9cc0245b2cb221263e72d8c5f2",
+  "dataset_digest": "42e5a2be6feb06d1988f0afb74999a3b7a1f2c4c7701ec790b3c7d9c5dfc2fc4",
+  "dataset_path": "/home/shifu/projects/skill-trainer/dataset/amc/dev",
+  "settings_digest": "292fff05f7bb2b81fb8e8198deacaa0d09e0bdf618d5e38c97134b4052ec377b",
+  "expected_runs": [
+    {
+      "case_id": "case-201",
+      "model": "gpt-5.6-sol",
+      "run_id": "run-01"
+    },
+    {
+      "case_id": "case-201",
+      "model": "gpt-5.6-terra",
+      "run_id": "run-01"
+    },
+    {
+      "case_id": "case-201",
+      "model": "gpt-5.6-luna",
+      "run_id": "run-01"
+    },
+    {
+      "case_id": "case-202",
+      "model": "gpt-5.6-sol",
+      "run_id": "run-01"
+    },
+    {
+      "case_id": "case-202",
+      "model": "gpt-5.6-terra",
+      "run_id": "run-01"
+    },
+    {
+      "case_id": "case-202",
+      "model": "gpt-5.6-luna",
+      "run_id": "run-01"
+    },
+    {
+      "case_id": "case-203",
+      "model": "gpt-5.6-sol",
+      "run_id": "run-01"
+    },
+    {
+      "case_id": "case-203",
+      "model": "gpt-5.6-terra",
+      "run_id": "run-01"
+    },
+    {
+      "case_id": "case-203",
+      "model": "gpt-5.6-luna",
+      "run_id": "run-01"
+    }
+  ],
+  "complete": true,
+  "failures": []
+}

@@ -5,18 +5,20 @@ import tempfile
 from pathlib import Path
 
 from .provider import make_provider
-from .storage import lifecycle_paths, read_json, write_json, digest_tree
+from .storage import identifier, lifecycle_paths, read_json, write_json, digest_tree
 from .checks import validate_skill
 
 
-def optimize(config, provider=None):
+def optimize(config, provider=None, evidence_root=None):
     paths = lifecycle_paths(config)
-    root = Path(config["results_dir"])
+    root = Path(evidence_root or config["results_dir"])
+    benchmark_root = root / "raw" if evidence_root else root
     for name, stage in (("benchmark.json", "dev-benchmark"), ("summary.json", "aggregate-dev"),
                         ("error_analysis.json", "error-analysis")):
-        if not (root / name).is_file():
+        location = benchmark_root / name if name == "benchmark.json" else root / name
+        if not location.is_file():
             raise RuntimeError(f"Missing {name}; run make optimize to execute the {stage} prerequisite")
-    if read_json(root / "benchmark.json").get("complete") is not True:
+    if read_json(benchmark_root / "benchmark.json").get("complete") is not True:
         raise RuntimeError("DEV benchmark failed; optimization cannot run on incomplete generation/evaluation")
     summary = read_json(root / "summary.json")
     if summary.get("complete") is not True:
@@ -26,7 +28,7 @@ def optimize(config, provider=None):
     source = paths["old_skill"] if paths["old_skill"].exists() else paths["source"]
     if (provenance.get("split") != "dev" or provenance != analysis.get("provenance") or
             provenance.get("skill_digest") != digest_tree(source) or
-            provenance.get("dataset_digest") != digest_tree(Path(config["dataset"]["path"]))):
+            provenance.get("dataset_digest") != digest_tree(Path(config["dataset"]["path"]), ignore_office_locks=True)):
         raise ValueError("Optimization requires matching DEV evidence for the previous skill and current dataset")
     dev = Path(config["dataset"]["path"]).resolve()
     holdout = Path(config["dataset"]["holdout_path"]).resolve()
@@ -70,8 +72,8 @@ def optimize(config, provider=None):
                                            for k in ("problem", "change", "reason")) for change in changes
     ):
         raise ValueError("Optimization requires problem/change/reason evidence")
-    paths["new_skill"].parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(dir=paths["new_skill"].parent) as temporary:
+    paths["optimization"].parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(dir=paths["optimization"].parent) as temporary:
         candidate = Path(temporary) / paths["name"]
         shutil.copytree(source, candidate)
         (candidate / "SKILL.md").write_text(proposal["skill_md"], encoding="utf-8")
@@ -80,10 +82,11 @@ def optimize(config, provider=None):
             raise ValueError(f"Invalid optimized Skill: {validation['errors']}")
         if not paths["old_skill"].exists():
             shutil.copytree(source, paths["old_skill"])
-        candidate.rename(paths["new_skill"])
+        paths["optimization"].mkdir()
+        candidate.rename(paths["proposed_skill"])
     result = {"skill_name": paths["name"], "from_version": paths["previous"], "to_version": paths["candidate"],
               "changes": changes, "source_digest": digest_tree(source),
-              "candidate_digest": digest_tree(paths["new_skill"]), "dev_provenance": provenance,
+              "candidate_digest": digest_tree(paths["proposed_skill"]), "dev_provenance": provenance,
               "apply_path": str(target), "project_digest": project_digest,
               "validation": validation, "method": "proposal" if settings.get("proposal_path") else "model"}
     write_json(paths["optimization"] / "optimization.json", result)
@@ -113,18 +116,25 @@ def apply_optimization(config):
         raise ValueError("Previously applied Skill has changed")
     if digest_tree(target.parent) != report["project_digest"]:
         raise ValueError("Working Skill changed since proposal; refusing to overwrite local changes")
-    validation = validate_skill(paths["new_skill"], paths["name"])
+    candidate = paths["proposed_skill"] if paths["proposed_skill"].exists() else paths["new_skill"]
+    validation = validate_skill(candidate, paths["name"])
     if not validation["valid"]:
         raise ValueError("Candidate is no longer valid")
     # Only SKILL.md is optimized. Preserve all project resources and use an atomic replacement.
     with tempfile.NamedTemporaryFile(dir=target.parent, delete=False) as stream:
         temporary = Path(stream.name)
-        stream.write((paths["new_skill"] / "SKILL.md").read_bytes())
+        stream.write((candidate / "SKILL.md").read_bytes())
     try:
         temporary.chmod(target.stat().st_mode & 0o777)
         temporary.replace(target)
     finally:
         temporary.unlink(missing_ok=True)
+    if not paths["new_skill"].exists():
+        paths["new_skill"].parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=paths["new_skill"].parent) as version_temp:
+            staged = Path(version_temp) / paths["name"]
+            shutil.copytree(candidate, staged)
+            staged.rename(paths["new_skill"])
     result = {"applied": True, "apply_path": str(target), "evidence_digest": fingerprint,
               "feedback_digest": digest_json(read_json(feedback_path)), "project_digest": digest_tree(target.parent),
               "candidate_digest": report["candidate_digest"], "applied_at": datetime.now(timezone.utc).isoformat()}
@@ -135,20 +145,29 @@ def apply_optimization(config):
 def main():
     import argparse
     from .storage import load_config
-    from .review import export_optimization_review
+    from .review import export_optimization_review, approve_optimization_feedback
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="config/benchmark.yaml")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--review", action="store_true")
+    mode.add_argument("--approve", action="store_true")
     mode.add_argument("--apply", action="store_true")
+    parser.add_argument("--evidence-version", help="Use prepared DEV evidence for this Skill version")
     args = parser.parse_args()
     config = load_config(args.config)
     if args.review:
         print(export_optimization_review(config))
+    elif args.approve:
+        print(approve_optimization_feedback(config))
     elif args.apply:
         print(apply_optimization(config))
     else:
-        optimize(config)
+        evidence_root = None
+        if args.evidence_version:
+            paths = lifecycle_paths(config)
+            version = paths["previous"] if args.evidence_version == "previous" else identifier(args.evidence_version)
+            evidence_root = paths["regression"] / version
+        optimize(config, evidence_root=evidence_root)
         print(lifecycle_paths(config)["optimization"] / "index.html")
 
 

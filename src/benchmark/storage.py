@@ -38,11 +38,13 @@ def identifier(value: str) -> str:
     return value
 
 
-def digest_tree(root: Path) -> str:
+def digest_tree(root: Path, *, ignore_office_locks: bool = False) -> str:
     digest = hashlib.sha256()
     if not root.is_dir() or root.is_symlink():
         raise ValueError(f"Expected regular directory: {root}")
     for path in sorted(root.rglob("*")):
+        if ignore_office_locks and path.name.startswith('.~lock.') and path.name.endswith('#'):
+            continue
         if path.is_symlink():
             raise ValueError(f"Symlinks are not allowed: {path}")
         if path.is_file():
@@ -82,10 +84,61 @@ def lifecycle_paths(config):
     return {"name": name, "source": source, "previous": previous, "candidate": candidate,
             "old_skill": versions / previous, "new_skill": versions / candidate,
             "optimization": runs / "optimization" / name / candidate,
+            "proposed_skill": runs / "optimization" / name / candidate / "candidate",
             "regression": runs / "regression" / name,
             "holdout": runs / "holdout" / name / candidate,
             "review": runs / "review" / name / candidate,
             "release": Path(settings["releases_dir"]) / name / candidate}
+
+
+def advance_lifecycle_config(config_path):
+    """Advance vN -> vN+1 after the current candidate has regression evidence."""
+    config_path = Path(config_path)
+    config = load_config(str(config_path))
+    paths = lifecycle_paths(config)
+    match = re.fullmatch(r"v(\d+)", paths["candidate"])
+    if not match:
+        raise ValueError("candidate_version must use the vN format")
+    if not paths["new_skill"].is_dir():
+        raise FileNotFoundError(f"Current candidate version does not exist: {paths['new_skill']}")
+    regression_path = paths["regression"] / "regression.json"
+    pair_path = paths["regression"] / f"{paths['previous']}-to-{paths['candidate']}" / "regression.json"
+    if not regression_path.is_file() and pair_path.is_file():
+        regression_path = pair_path
+    if not regression_path.is_file():
+        raise FileNotFoundError("Regression report is required before advancing lifecycle versions")
+    regression = read_json(regression_path)
+    if (regression.get("previous_version") != paths["previous"] or
+            regression.get("candidate_version") != paths["candidate"]):
+        raise ValueError("Regression report does not match the configured version pair")
+    next_version = f"v{int(match.group(1)) + 1}"
+    if (Path(config["lifecycle"]["versions_dir"]) / paths["name"] / next_version).exists():
+        raise FileExistsError(f"Next Skill version already exists: {next_version}")
+
+    text = config_path.read_text(encoding="utf-8")
+    lifecycle = re.search(r"(?ms)^lifecycle:\s*\n(?P<body>(?:^[ \t]+.*\n?)*)", text)
+    if not lifecycle:
+        raise ValueError("Missing lifecycle mapping in configuration")
+    body = lifecycle.group("body")
+    replacements = {
+        "previous_version": paths["candidate"],
+        "candidate_version": next_version,
+    }
+    for key, value in replacements.items():
+        pattern = rf"(?m)^(?P<indent>[ \t]+){key}:\s*[^\n]*$"
+        if len(re.findall(pattern, body)) != 1:
+            raise ValueError(f"lifecycle.{key} must occur exactly once")
+        body = re.sub(pattern, rf"\g<indent>{key}: {value}", body)
+    updated = text[:lifecycle.start("body")] + body + text[lifecycle.end("body"):]
+    with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=config_path.parent, delete=False) as stream:
+        temporary = Path(stream.name)
+        stream.write(updated)
+    temporary.replace(config_path)
+    verified = load_config(str(config_path))["lifecycle"]
+    if verified["previous_version"] != paths["candidate"] or verified["candidate_version"] != next_version:
+        raise RuntimeError("Lifecycle version update could not be verified")
+    return {"previous_version": paths["candidate"], "candidate_version": next_version,
+            "config": str(config_path)}
 
 
 DEFAULT_ARTIFACTS = ('runs', 'skill_versions', 'releases', 'build', 'dist',
@@ -131,9 +184,14 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--venv', default='.venv')
     parser.add_argument('--distclean', action='store_true')
+    parser.add_argument('--advance-lifecycle', action='store_true')
+    parser.add_argument('--config', default='config/benchmark.yaml')
     parser.add_argument('--artifacts', nargs='*', default=list(DEFAULT_ARTIFACTS))
     args = parser.parse_args()
-    clean(Path.cwd(), args.artifacts, args.venv, args.distclean)
+    if args.advance_lifecycle:
+        print(advance_lifecycle_config(args.config))
+    else:
+        clean(Path.cwd(), args.artifacts, args.venv, args.distclean)
 
 
 if __name__ == '__main__':

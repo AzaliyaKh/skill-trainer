@@ -1,0 +1,83 @@
+{
+  "passed": 11,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "docx_valid:technical-specification.docx",
+      "passed": true,
+      "category": "docx_valid",
+      "severity": "critical",
+      "evidence": "Readable DOCX package"
+    },
+    {
+      "name": "non_empty:technical-specification.docx",
+      "passed": true,
+      "category": "non_empty",
+      "severity": "major",
+      "evidence": "Output must not be empty"
+    },
+    {
+      "name": "contains:technical-specification.docx",
+      "passed": true,
+      "category": "contains",
+      "severity": "major",
+      "evidence": "Required text: Назначение"
+    },
+    {
+      "name": "contains:technical-specification.docx",
+      "passed": true,
+      "category": "contains",
+      "severity": "major",
+      "evidence": "Required text: Технические требования"
+    },
+    {
+      "name": "contains:technical-specification.docx",
+      "passed": true,
+      "category": "contains",
+      "severity": "major",
+      "evidence": "Required text: Критерии приёмки"
+    },
+    {
+      "name": "contains:technical-specification.docx",
+      "passed": true,
+      "category": "contains",
+      "severity": "major",
+      "evidence": "Required text: Открытые вопросы"
+    },
+    {
+      "name": "contains:technical-specification.docx",
+      "passed": true,
+      "category": "contains",
+      "severity": "major",
+      "evidence": "Required text: Golden Image"
+    },
+    {
+      "name": "contains:technical-specification.docx",
+      "passed": true,
+      "category": "contains",
+      "severity": "major",
+      "evidence": "Required text: M0–M7"
+    },
+    {
+      "name": "contains:technical-specification.docx",
+      "passed": true,
+      "category": "contains",
+      "severity": "major",
+      "evidence": "Required text: 100 мкс"
+    },
+    {
+      "name": "contains:technical-specification.docx",
+      "passed": true,
+      "category": "contains",
+      "severity": "major",
+      "evidence": "Required text: 300 фс"
+    },
+    {
+      "name": "file_exists:technical-specification.docx",
+      "passed": true,
+      "category": "file_exists",
+      "severity": "critical",
+      "evidence": "Required file: technical-specification.docx"
+    }
+  ]
+}

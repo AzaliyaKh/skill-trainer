@@ -1,0 +1,30 @@
+{
+  "criteria": [
+    {
+      "name": "source_fidelity_and_completeness",
+      "score": 35,
+      "max_score": 40,
+      "reasoning": "Основные требования и значения отражены полно, но добавлены неподтверждённые габариты 73,5 × 180,6 × 28,95 мм и отдельные уточняющие формулировки."
+    },
+    {
+      "name": "architecture_interfaces_and_behavior",
+      "score": 23,
+      "max_score": 25,
+      "reasoning": "Аппаратная и логическая части, интерфейсы E1/B2B/Fabric, режимы SAToP/CESoPSN и тактирования описаны согласованно."
+    },
+    {
+      "name": "safety_diagnostics_and_verification",
+      "score": 19,
+      "max_score": 20,
+      "reasoning": "Аварийные состояния, AIS, диагностика, петли, PRBS и методы проверки перечислены, а неизвестные критерии явно вынесены на уточнение."
+    },
+    {
+      "name": "structure_and_gap_handling",
+      "score": 14,
+      "max_score": 15,
+      "reasoning": "Документ структурирован по восьми разделам и содержит прослеживаемые проверки и placeholders, хотя добавлены вспомогательные подразделы и неподтверждённые реквизиты."
+    }
+  ],
+  "total_score": 91,
+  "max_score": 100
+}

@@ -1,0 +1,311 @@
+{
+  "passed": false,
+  "compatible": true,
+  "total_score_delta": -0.7777777777777778,
+  "comparisons": [
+    {
+      "case_id": "case-201",
+      "model": "gpt-5.6-luna",
+      "score_delta": -3.0,
+      "criteria_delta": {
+        "applicable_gost_structure": 0.0,
+        "acceptance_and_gap_handling": -10.0,
+        "source_fidelity_and_completeness": -2.857142857142861,
+        "technical_clarity_and_traceability": 0.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    },
+    {
+      "case_id": "case-201",
+      "model": "gpt-5.6-sol",
+      "score_delta": 0.0,
+      "criteria_delta": {
+        "applicable_gost_structure": 4.0,
+        "acceptance_and_gap_handling": 0.0,
+        "source_fidelity_and_completeness": -2.857142857142861,
+        "technical_clarity_and_traceability": 0.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    },
+    {
+      "case_id": "case-201",
+      "model": "gpt-5.6-terra",
+      "score_delta": 0.0,
+      "criteria_delta": {
+        "applicable_gost_structure": 0.0,
+        "acceptance_and_gap_handling": 0.0,
+        "source_fidelity_and_completeness": 0.0,
+        "technical_clarity_and_traceability": 0.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    },
+    {
+      "case_id": "case-202",
+      "model": "gpt-5.6-luna",
+      "score_delta": 0.0,
+      "criteria_delta": {
+        "safety_diagnostics_and_verification": 0.0,
+        "structure_and_gap_handling": 6.666666666666657,
+        "source_fidelity_and_completeness": -2.5,
+        "architecture_interfaces_and_behavior": 0.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    },
+    {
+      "case_id": "case-202",
+      "model": "gpt-5.6-sol",
+      "score_delta": 4.0,
+      "criteria_delta": {
+        "safety_diagnostics_and_verification": 5.0,
+        "structure_and_gap_handling": 6.666666666666657,
+        "source_fidelity_and_completeness": 2.5,
+        "architecture_interfaces_and_behavior": 4.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    },
+    {
+      "case_id": "case-202",
+      "model": "gpt-5.6-terra",
+      "score_delta": -6.0,
+      "criteria_delta": {
+        "safety_diagnostics_and_verification": 0.0,
+        "structure_and_gap_handling": -20.0,
+        "source_fidelity_and_completeness": -5.0,
+        "architecture_interfaces_and_behavior": -4.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    },
+    {
+      "case_id": "case-203",
+      "model": "gpt-5.6-luna",
+      "score_delta": -6.0,
+      "criteria_delta": {
+        "safety_diagnostics_and_verification": -10.0,
+        "structure_and_gap_handling": -6.666666666666671,
+        "source_fidelity_and_completeness": -5.0,
+        "architecture_interfaces_and_behavior": -4.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    },
+    {
+      "case_id": "case-203",
+      "model": "gpt-5.6-sol",
+      "score_delta": 2.0,
+      "criteria_delta": {
+        "safety_diagnostics_and_verification": 0.0,
+        "structure_and_gap_handling": 6.666666666666671,
+        "source_fidelity_and_completeness": 0.0,
+        "architecture_interfaces_and_behavior": 4.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    },
+    {
+      "case_id": "case-203",
+      "model": "gpt-5.6-terra",
+      "score_delta": 2.0,
+      "criteria_delta": {
+        "safety_diagnostics_and_verification": 0.0,
+        "structure_and_gap_handling": 0.0,
+        "source_fidelity_and_completeness": 2.5,
+        "architecture_interfaces_and_behavior": 4.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    }
+  ],
+  "improved_cases": [
+    {
+      "case_id": "case-202",
+      "model": "gpt-5.6-sol",
+      "score_delta": 4.0,
+      "criteria_delta": {
+        "safety_diagnostics_and_verification": 5.0,
+        "structure_and_gap_handling": 6.666666666666657,
+        "source_fidelity_and_completeness": 2.5,
+        "architecture_interfaces_and_behavior": 4.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    },
+    {
+      "case_id": "case-203",
+      "model": "gpt-5.6-sol",
+      "score_delta": 2.0,
+      "criteria_delta": {
+        "safety_diagnostics_and_verification": 0.0,
+        "structure_and_gap_handling": 6.666666666666671,
+        "source_fidelity_and_completeness": 0.0,
+        "architecture_interfaces_and_behavior": 4.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    },
+    {
+      "case_id": "case-203",
+      "model": "gpt-5.6-terra",
+      "score_delta": 2.0,
+      "criteria_delta": {
+        "safety_diagnostics_and_verification": 0.0,
+        "structure_and_gap_handling": 0.0,
+        "source_fidelity_and_completeness": 2.5,
+        "architecture_interfaces_and_behavior": 4.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    }
+  ],
+  "degraded_cases": [
+    {
+      "case_id": "case-201",
+      "model": "gpt-5.6-luna",
+      "score_delta": -3.0,
+      "criteria_delta": {
+        "applicable_gost_structure": 0.0,
+        "acceptance_and_gap_handling": -10.0,
+        "source_fidelity_and_completeness": -2.857142857142861,
+        "technical_clarity_and_traceability": 0.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    },
+    {
+      "case_id": "case-201",
+      "model": "gpt-5.6-sol",
+      "score_delta": 0.0,
+      "criteria_delta": {
+        "applicable_gost_structure": 4.0,
+        "acceptance_and_gap_handling": 0.0,
+        "source_fidelity_and_completeness": -2.857142857142861,
+        "technical_clarity_and_traceability": 0.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    },
+    {
+      "case_id": "case-202",
+      "model": "gpt-5.6-luna",
+      "score_delta": 0.0,
+      "criteria_delta": {
+        "safety_diagnostics_and_verification": 0.0,
+        "structure_and_gap_handling": 6.666666666666657,
+        "source_fidelity_and_completeness": -2.5,
+        "architecture_interfaces_and_behavior": 0.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    },
+    {
+      "case_id": "case-202",
+      "model": "gpt-5.6-terra",
+      "score_delta": -6.0,
+      "criteria_delta": {
+        "safety_diagnostics_and_verification": 0.0,
+        "structure_and_gap_handling": -20.0,
+        "source_fidelity_and_completeness": -5.0,
+        "architecture_interfaces_and_behavior": -4.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    },
+    {
+      "case_id": "case-203",
+      "model": "gpt-5.6-luna",
+      "score_delta": -6.0,
+      "criteria_delta": {
+        "safety_diagnostics_and_verification": -10.0,
+        "structure_and_gap_handling": -6.666666666666671,
+        "source_fidelity_and_completeness": -5.0,
+        "architecture_interfaces_and_behavior": -4.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    }
+  ],
+  "critical_regressions": [
+    {
+      "case_id": "case-201",
+      "model": "gpt-5.6-luna",
+      "score_delta": -3.0,
+      "criteria_delta": {
+        "applicable_gost_structure": 0.0,
+        "acceptance_and_gap_handling": -10.0,
+        "source_fidelity_and_completeness": -2.857142857142861,
+        "technical_clarity_and_traceability": 0.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    },
+    {
+      "case_id": "case-201",
+      "model": "gpt-5.6-sol",
+      "score_delta": 0.0,
+      "criteria_delta": {
+        "applicable_gost_structure": 4.0,
+        "acceptance_and_gap_handling": 0.0,
+        "source_fidelity_and_completeness": -2.857142857142861,
+        "technical_clarity_and_traceability": 0.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    },
+    {
+      "case_id": "case-202",
+      "model": "gpt-5.6-luna",
+      "score_delta": 0.0,
+      "criteria_delta": {
+        "safety_diagnostics_and_verification": 0.0,
+        "structure_and_gap_handling": 6.666666666666657,
+        "source_fidelity_and_completeness": -2.5,
+        "architecture_interfaces_and_behavior": 0.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    },
+    {
+      "case_id": "case-202",
+      "model": "gpt-5.6-terra",
+      "score_delta": -6.0,
+      "criteria_delta": {
+        "safety_diagnostics_and_verification": 0.0,
+        "structure_and_gap_handling": -20.0,
+        "source_fidelity_and_completeness": -5.0,
+        "architecture_interfaces_and_behavior": -4.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    },
+    {
+      "case_id": "case-203",
+      "model": "gpt-5.6-luna",
+      "score_delta": -6.0,
+      "criteria_delta": {
+        "safety_diagnostics_and_verification": -10.0,
+        "structure_and_gap_handling": -6.666666666666671,
+        "source_fidelity_and_completeness": -5.0,
+        "architecture_interfaces_and_behavior": -4.0
+      },
+      "checks_delta": 0.0,
+      "variance_delta": 0
+    }
+  ],
+  "applied_gates": {
+    "max_score_drop": 0,
+    "max_criterion_drop": 0,
+    "max_checks_drop": 0,
+    "max_stddev_increase": 10
+  },
+  "skill_name": "requirements-analysis",
+  "previous_version": "v0",
+  "candidate_version": "v1",
+  "previous_digest": "a4c4e388bca4821cba3ab4d188567ba44a2b2fa0149414c0d8a6ad4905f7eb2c",
+  "candidate_digest": "ab80ede27b0da38dde693f12c36d9ccbb5e6b16439adf4d5b2752248f5721336",
+  "evidence_digest": "a9693fd23466cfda436fbda616369eb8daff91df3401d9be14d9c965e404b741"
+}

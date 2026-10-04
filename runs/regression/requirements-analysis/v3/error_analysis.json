@@ -1,0 +1,512 @@
+{
+  "cases": {
+    "case-201": {
+      "gpt-5.6-luna": {
+        "has_errors": false,
+        "issues": [],
+        "failed_checks": {},
+        "judge_reasoning": {
+          "source_fidelity_and_completeness": [
+            {
+              "run": "run-01",
+              "name": "source_fidelity_and_completeness",
+              "score": 32,
+              "max_score": 35,
+              "reasoning": "Основные требования, численные параметры и открытые значения отражены полно, однако отдельные расшифровки сокращений неточны, а некоторые формулировки упрощены или расширены."
+            }
+          ],
+          "applicable_gost_structure": [
+            {
+              "run": "run-01",
+              "name": "applicable_gost_structure",
+              "score": 23,
+              "max_score": 25,
+              "reasoning": "Присутствуют титульная часть, лист согласования, сокращения, нормативные документы и разделы 1–8, но оформление таблиц и нумерация нормативных документов выполнены непоследовательно."
+            }
+          ],
+          "technical_clarity_and_traceability": [
+            {
+              "run": "run-01",
+              "name": "technical_clarity_and_traceability",
+              "score": 18,
+              "max_score": 20,
+              "reasoning": "Состав изделия, интерфейсы, режимы, аварийное поведение, ограничения и проверки в основном изложены однозначно и связаны с требованиями."
+            }
+          ],
+          "acceptance_and_gap_handling": [
+            {
+              "run": "run-01",
+              "name": "acceptance_and_gap_handling",
+              "score": 18,
+              "max_score": 20,
+              "reasoning": "Большинство требований сопровождается проверками, а неизвестные организации, сроки, пороги и режимы явно оставлены для уточнения, хотя часть критериев остаётся недостаточно количественной."
+            }
+          ]
+        },
+        "runs": [
+          {
+            "run": "run-01",
+            "score": 91.0
+          }
+        ]
+      },
+      "gpt-5.6-sol": {
+        "has_errors": false,
+        "issues": [],
+        "failed_checks": {},
+        "judge_reasoning": {
+          "source_fidelity_and_completeness": [
+            {
+              "run": "run-01",
+              "name": "source_fidelity_and_completeness",
+              "score": 32,
+              "max_score": 35,
+              "reasoning": "Основные требования, численные параметры, разделы 1–8 и состав изделия отражены полно, при этом незаданные сведения в основном оставлены для уточнения; имеются отдельные упрощения и добавленные термины."
+            }
+          ],
+          "applicable_gost_structure": [
+            {
+              "run": "run-01",
+              "name": "applicable_gost_structure",
+              "score": 23,
+              "max_score": 25,
+              "reasoning": "Присутствуют титульная часть, лист согласования, сокращения, нормативные документы и разделы 1–8, однако оформление таблиц и реквизитов лишь частично соответствует применимым требованиям ГОСТ."
+            }
+          ],
+          "technical_clarity_and_traceability": [
+            {
+              "run": "run-01",
+              "name": "technical_clarity_and_traceability",
+              "score": 18,
+              "max_score": 20,
+              "reasoning": "Архитектура, интерфейсы, режимы, аварийное поведение и параметры изделия изложены подробно и связаны с проверками, но некоторые варианты исполнения и реакции оставлены неоднозначными до уточнения."
+            }
+          ],
+          "acceptance_and_gap_handling": [
+            {
+              "run": "run-01",
+              "name": "acceptance_and_gap_handling",
+              "score": 19,
+              "max_score": 20,
+              "reasoning": "Для большинства требований приведены методы, условия и измеримые критерии приемки, а неизвестные значения явно помечены как подлежащие уточнению."
+            }
+          ]
+        },
+        "runs": [
+          {
+            "run": "run-01",
+            "score": 92.0
+          }
+        ]
+      },
+      "gpt-5.6-terra": {
+        "has_errors": false,
+        "issues": [],
+        "failed_checks": {},
+        "judge_reasoning": {
+          "source_fidelity_and_completeness": [
+            {
+              "run": "run-01",
+              "name": "source_fidelity_and_completeness",
+              "score": 33,
+              "max_score": 35,
+              "reasoning": "Основные требования, численные параметры, интерфейсы, режимы и разделы 1–8 отражены полно и без существенных вымышленных сведений, при этом неизвестные данные оставлены для уточнения."
+            }
+          ],
+          "applicable_gost_structure": [
+            {
+              "run": "run-01",
+              "name": "applicable_gost_structure",
+              "score": 23,
+              "max_score": 25,
+              "reasoning": "Присутствуют титульная часть, лист согласования, сокращения, нормативные документы и разделы 1–8, хотя оформление несколько упрощено относительно образца ГОСТ."
+            }
+          ],
+          "technical_clarity_and_traceability": [
+            {
+              "run": "run-01",
+              "name": "technical_clarity_and_traceability",
+              "score": 19,
+              "max_score": 20,
+              "reasoning": "Архитектура, интерфейсы, режимы передачи и тактирования, аварийное поведение, диагностика и критерии проверки изложены однозначно и прослеживаемо."
+            }
+          ],
+          "acceptance_and_gap_handling": [
+            {
+              "run": "run-01",
+              "name": "acceptance_and_gap_handling",
+              "score": 19,
+              "max_score": 20,
+              "reasoning": "Для большинства требований приведены проверяемые способы подтверждения, а незаданные пороги, даты, роли и отдельные методики явно обозначены как требующие уточнения."
+            }
+          ]
+        },
+        "runs": [
+          {
+            "run": "run-01",
+            "score": 94.0
+          }
+        ]
+      }
+    },
+    "case-202": {
+      "gpt-5.6-luna": {
+        "has_errors": false,
+        "issues": [],
+        "failed_checks": {},
+        "judge_reasoning": {
+          "source_fidelity_and_completeness": [
+            {
+              "run": "run-01",
+              "name": "source_fidelity_and_completeness",
+              "score": 35,
+              "max_score": 40,
+              "reasoning": "Основные требования и числовые параметры восьми разделов сохранены полно, однако добавлены неподтверждённые габариты изделия и отдельные лишние реквизиты."
+            }
+          ],
+          "architecture_interfaces_and_behavior": [
+            {
+              "run": "run-01",
+              "name": "architecture_interfaces_and_behavior",
+              "score": 22,
+              "max_score": 25,
+              "reasoning": "Аппаратная и логическая части, интерфейсы E1/B2B/Fabric, режимы передачи и тактирования в основном разделены и согласованы, но часть связей описана укрупнённо."
+            }
+          ],
+          "safety_diagnostics_and_verification": [
+            {
+              "run": "run-01",
+              "name": "safety_diagnostics_and_verification",
+              "score": 18,
+              "max_score": 20,
+              "reasoning": "Аварийные состояния, AIS, диагностика, петли, PRBS и проверки охвачены, но для ряда критериев отсутствуют конкретные допуски, длительности и методики."
+            }
+          ],
+          "structure_and_gap_handling": [
+            {
+              "run": "run-01",
+              "name": "structure_and_gap_handling",
+              "score": 12,
+              "max_score": 15,
+              "reasoning": "Документ хорошо структурирован, пробелы явно помечены как уточняемые, но оформление содержит дополнительные реквизиты и не полностью соответствует компактной структуре исходного ТЗ."
+            }
+          ]
+        },
+        "runs": [
+          {
+            "run": "run-01",
+            "score": 87.0
+          }
+        ]
+      },
+      "gpt-5.6-sol": {
+        "has_errors": false,
+        "issues": [],
+        "failed_checks": {},
+        "judge_reasoning": {
+          "source_fidelity_and_completeness": [
+            {
+              "run": "run-01",
+              "name": "source_fidelity_and_completeness",
+              "score": 36,
+              "max_score": 40,
+              "reasoning": "Основные требования и значения по восьми разделам отражены полно, однако добавлены неподтверждённые габариты изделия и отдельные расширения исходных требований."
+            }
+          ],
+          "architecture_interfaces_and_behavior": [
+            {
+              "run": "run-01",
+              "name": "architecture_interfaces_and_behavior",
+              "score": 24,
+              "max_score": 25,
+              "reasoning": "Аппаратная и логическая части, E1/B2B/Fabric-интерфейсы, режимы передачи, тактирования и взаимодействие с РМО описаны согласованно."
+            }
+          ],
+          "safety_diagnostics_and_verification": [
+            {
+              "run": "run-01",
+              "name": "safety_diagnostics_and_verification",
+              "score": 19,
+              "max_score": 20,
+              "reasoning": "Аварийные состояния, AIS, диагностика, петли и проверки системно покрыты измеримыми процедурами, хотя часть критериев оставлена для уточнения в ПМИ."
+            }
+          ],
+          "structure_and_gap_handling": [
+            {
+              "run": "run-01",
+              "name": "structure_and_gap_handling",
+              "score": 14,
+              "max_score": 15,
+              "reasoning": "Документ хорошо структурирован, требования имеют идентификаторы и трассировку к проверкам, а большинство неизвестных реквизитов явно отмечено как уточняемое."
+            }
+          ]
+        },
+        "runs": [
+          {
+            "run": "run-01",
+            "score": 93.0
+          }
+        ]
+      },
+      "gpt-5.6-terra": {
+        "has_errors": false,
+        "issues": [],
+        "failed_checks": {},
+        "judge_reasoning": {
+          "source_fidelity_and_completeness": [
+            {
+              "run": "run-01",
+              "name": "source_fidelity_and_completeness",
+              "score": 35,
+              "max_score": 40,
+              "reasoning": "Основные требования, значения и все восемь разделов отражены полно, однако добавлены неподтверждённые габариты 73,5 × 180,6 × 28,95 мм и есть отдельные изменения формулировок исходных требований."
+            }
+          ],
+          "architecture_interfaces_and_behavior": [
+            {
+              "run": "run-01",
+              "name": "architecture_interfaces_and_behavior",
+              "score": 23,
+              "max_score": 25,
+              "reasoning": "Аппаратная и логическая части, E1-интерфейсы, B2B, режимы SAToP/CESoPSN, тактирование и потоки описаны согласованно, хотя некоторые связи и параметры раскрыты укрупнённо."
+            }
+          ],
+          "safety_diagnostics_and_verification": [
+            {
+              "run": "run-01",
+              "name": "safety_diagnostics_and_verification",
+              "score": 18,
+              "max_score": 20,
+              "reasoning": "Аварийные состояния, AIS, диагностика, петли, PRBS и проверки требований предусмотрены, но часть критериев остаётся недостаточно измеримой, включая задержку, QoS и требования G.823."
+            }
+          ],
+          "structure_and_gap_handling": [
+            {
+              "run": "run-01",
+              "name": "structure_and_gap_handling",
+              "score": 13,
+              "max_score": 15,
+              "reasoning": "Документ хорошо структурирован и явно помечает неизвестные реквизиты как «[уточнить]», но оформление упрощено, а отдельные добавленные сведения и реквизитные блоки выходят за подтверждённые исходные данные."
+            }
+          ]
+        },
+        "runs": [
+          {
+            "run": "run-01",
+            "score": 89.0
+          }
+        ]
+      }
+    },
+    "case-203": {
+      "gpt-5.6-luna": {
+        "has_errors": false,
+        "issues": [],
+        "failed_checks": {},
+        "judge_reasoning": {
+          "source_fidelity_and_completeness": [
+            {
+              "run": "run-01",
+              "name": "source_fidelity_and_completeness",
+              "score": 36,
+              "max_score": 40,
+              "reasoning": "Основные требования, значения и ограничения исходных данных отражены полно, но отдельные определения и детали назначения/состава представлены сокращённо."
+            }
+          ],
+          "architecture_interfaces_and_behavior": [
+            {
+              "run": "run-01",
+              "name": "architecture_interfaces_and_behavior",
+              "score": 22,
+              "max_score": 25,
+              "reasoning": "Аппаратная и логическая части, порты, B2B, питание, пакетные потоки и режимы синхронизации описаны согласованно, однако некоторые внутренние интерфейсы и режимы раскрыты неполно."
+            }
+          ],
+          "safety_diagnostics_and_verification": [
+            {
+              "run": "run-01",
+              "name": "safety_diagnostics_and_verification",
+              "score": 16,
+              "max_score": 20,
+              "reasoning": "Аварии LOS/AIS, ошибки HDB3, буферизация, петли и PRBS учтены, но проверочные процедуры, измеримые критерии и безопасные состояния в основном оставлены на уточнение."
+            }
+          ],
+          "structure_and_gap_handling": [
+            {
+              "run": "run-01",
+              "name": "structure_and_gap_handling",
+              "score": 14,
+              "max_score": 15,
+              "reasoning": "Все восемь разделов оформлены прослеживаемо, неизвестные реквизиты явно помечены, хотя документ перегружен дополнительными листами и содержит много незаполненных шаблонных полей."
+            }
+          ]
+        },
+        "runs": [
+          {
+            "run": "run-01",
+            "score": 88.0
+          }
+        ]
+      },
+      "gpt-5.6-sol": {
+        "has_errors": false,
+        "issues": [],
+        "failed_checks": {},
+        "judge_reasoning": {
+          "source_fidelity_and_completeness": [
+            {
+              "run": "run-01",
+              "name": "source_fidelity_and_completeness",
+              "score": 38,
+              "max_score": 40,
+              "reasoning": "Основные требования, численные параметры, ограничения и все восемь разделов отражены полно, а неизвестные реквизиты в основном оставлены на уточнение без выдуманных значений."
+            }
+          ],
+          "architecture_interfaces_and_behavior": [
+            {
+              "run": "run-01",
+              "name": "architecture_interfaces_and_behavior",
+              "score": 24,
+              "max_score": 25,
+              "reasoning": "Аппаратная и логическая части, разъёмы, B2B, потоки E2/E3, пакетные режимы, синхронизация и автоматическая загрузка по Board ID описаны согласованно."
+            }
+          ],
+          "safety_diagnostics_and_verification": [
+            {
+              "run": "run-01",
+              "name": "safety_diagnostics_and_verification",
+              "score": 18,
+              "max_score": 20,
+              "reasoning": "Аварийные состояния, AIS, LOS, BPV/CV, петли, PRBS и методы проверки охвачены, однако отдельные критерии и параметры реакции обоснованно отложены в ПМИ."
+            }
+          ],
+          "structure_and_gap_handling": [
+            {
+              "run": "run-01",
+              "name": "structure_and_gap_handling",
+              "score": 13,
+              "max_score": 15,
+              "reasoning": "Документ хорошо трассируется через нумерованные требования и таблицы проверки, а пробелы явно помечены, но он перегружен дополнительными перечнями и имеет менее аккуратное оформление, чем reference."
+            }
+          ]
+        },
+        "runs": [
+          {
+            "run": "run-01",
+            "score": 93.0
+          }
+        ]
+      },
+      "gpt-5.6-terra": {
+        "has_errors": true,
+        "issues": [
+          {
+            "type": "weak_criterion",
+            "name": "safety_diagnostics_and_verification",
+            "mean": 75.0
+          }
+        ],
+        "failed_checks": {},
+        "judge_reasoning": {
+          "source_fidelity_and_completeness": [
+            {
+              "run": "run-01",
+              "name": "source_fidelity_and_completeness",
+              "score": 36,
+              "max_score": 40,
+              "reasoning": "Основные требования, точные параметры E2/E3, интерфейсы, режимы и ограничения отражены полно, но отдельные нормативные и функциональные детали сокращены или переданы менее точно."
+            }
+          ],
+          "architecture_interfaces_and_behavior": [
+            {
+              "run": "run-01",
+              "name": "architecture_interfaces_and_behavior",
+              "score": 22,
+              "max_score": 25,
+              "reasoning": "Аппаратная и логическая части, B2B, порты, пакетная передача, тактирование и режимы диагностики в целом разделены и согласованы, однако внутренние связи и интерфейсные протоколы описаны неполно."
+            }
+          ],
+          "safety_diagnostics_and_verification": [
+            {
+              "run": "run-01",
+              "name": "safety_diagnostics_and_verification",
+              "score": 15,
+              "max_score": 20,
+              "reasoning": "Аварийные состояния, AIS, LOS/AIS, ошибки HDB3, петли, PRBS и проверки перечислены, но безопасные реакции и измеримые критерии испытаний для ряда требований, включая надежность, недостаточно определены."
+            }
+          ],
+          "structure_and_gap_handling": [
+            {
+              "run": "run-01",
+              "name": "structure_and_gap_handling",
+              "score": 13,
+              "max_score": 15,
+              "reasoning": "Документ содержит восемь требуемых разделов, проверки и явные пометки «уточнить», но оформление заметно упрощено относительно образца и ГОСТ, а часть дополнительных реквизитов и таблиц оформлена формально."
+            }
+          ]
+        },
+        "runs": [
+          {
+            "run": "run-01",
+            "score": 86.0
+          }
+        ]
+      }
+    }
+  },
+  "provenance": {
+    "split": "dev",
+    "skill_digest": "90b25673a489d155766f0f94b1c6556772d3a657c63cfaf04d361ca01f914ada",
+    "dataset_digest": "42e5a2be6feb06d1988f0afb74999a3b7a1f2c4c7701ec790b3c7d9c5dfc2fc4",
+    "dataset_path": "/home/shifu/projects/skill-trainer/dataset/amc/dev",
+    "settings_digest": "292fff05f7bb2b81fb8e8198deacaa0d09e0bdf618d5e38c97134b4052ec377b",
+    "expected_runs": [
+      {
+        "case_id": "case-201",
+        "model": "gpt-5.6-sol",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-201",
+        "model": "gpt-5.6-terra",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-201",
+        "model": "gpt-5.6-luna",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-202",
+        "model": "gpt-5.6-sol",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-202",
+        "model": "gpt-5.6-terra",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-202",
+        "model": "gpt-5.6-luna",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-203",
+        "model": "gpt-5.6-sol",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-203",
+        "model": "gpt-5.6-terra",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-203",
+        "model": "gpt-5.6-luna",
+        "run_id": "run-01"
+      }
+    ]
+  },
+  "missing_runs": []
+}

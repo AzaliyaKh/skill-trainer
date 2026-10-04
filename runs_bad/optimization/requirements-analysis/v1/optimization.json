@@ -1,0 +1,138 @@
+{
+  "skill_name": "requirements-analysis",
+  "from_version": "v0",
+  "to_version": "v1",
+  "changes": [
+    {
+      "problem": "Generated documents repeatedly added title metadata, introductory material, control blocks, acceptance subsections, or open-question sections outside the requested structure.",
+      "change": "Added an explicit structural allowlist rule and required gaps to be labeled within the nearest requested section unless a separate section is requested or mandatory.",
+      "reason": "This addresses the recurring weakness in structure and gap handling while preserving the requested GOST scope."
+    },
+    {
+      "problem": "Some outputs added acceptance criteria and verification procedures even when they were not requested, occasionally introducing unsupported interpretations.",
+      "change": "Made standalone acceptance content conditional on the request and directed testability improvements into requirement wording or numbering otherwise.",
+      "reason": "This retains verifiability without expanding the deliverable or converting inferred procedures into requirements."
+    },
+    {
+      "problem": "Source meaning was occasionally weakened or altered, including changing cumulative modes into alternatives and turning mandatory requirements into descriptive language.",
+      "change": "Added explicit preservation rules for modality, conjunctions, alternatives, optionality, and cumulative multi-mode support.",
+      "reason": "Exact semantic fidelity requires more than copying numeric values and identifiers."
+    },
+    {
+      "problem": "Several runs omitted minor source elements or introduced unsupported explanations while still appearing broadly complete.",
+      "change": "Added an internal requirement inventory and section-mapping step covering values, modality, responsibilities, interfaces, failures, alternatives, and gaps.",
+      "reason": "A coverage inventory reduces subtle omissions and unsupported elaboration without imposing extra output sections."
+    },
+    {
+      "problem": "Traceability and verification text sometimes became repetitive and inflated the prescribed structure.",
+      "change": "Required concise identifiers, numbering, or an internal coverage map and prohibited standalone matrices or repetitive traceability prose unless requested.",
+      "reason": "This preserves coverage and auditability while avoiding unnecessary document expansion."
+    },
+    {
+      "problem": "Verification criteria sometimes depended on unspecified methods, thresholds, equipment, or conditions.",
+      "change": "Prohibited invention of verification details and required missing method inputs to remain explicit open questions.",
+      "reason": "Acceptance criteria should be observable without disguising unresolved engineering decisions as confirmed requirements."
+    },
+    {
+      "problem": "Final checks did not explicitly guard all recurring semantic and structural failure modes.",
+      "change": "Expanded artifact verification to check requested structure, exact modality and logical relationships, responsibility boundaries, unsupported additions, and acceptance coverage.",
+      "reason": "A targeted final audit catches the benchmark’s recurring near-miss errors before delivery."
+    }
+  ],
+  "source_digest": "4f2297bc22e6d07eeb6724d9dfbe6ca6bda003f0b8597424b51b499dae05b802",
+  "candidate_digest": "a4c4e388bca4821cba3ab4d188567ba44a2b2fa0149414c0d8a6ad4905f7eb2c",
+  "dev_provenance": {
+    "split": "dev",
+    "skill_digest": "4f2297bc22e6d07eeb6724d9dfbe6ca6bda003f0b8597424b51b499dae05b802",
+    "dataset_digest": "8551e23912416dbe0ca6f2e07809b399207a5c02fba4cfd4c26f81a700346197",
+    "dataset_path": "/home/shifu/projects/skill-trainer/dataset/amc/dev",
+    "settings_digest": "cc73290db2c5b40648551ca959e3fd9b96ad748a2a17eb025b3a989ced581b5e",
+    "expected_runs": [
+      {
+        "case_id": "case-201",
+        "model": "gpt-5.6-sol",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-201",
+        "model": "gpt-5.6-terra",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-201",
+        "model": "gpt-5.6-luna",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-202",
+        "model": "gpt-5.6-sol",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-202",
+        "model": "gpt-5.6-terra",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-202",
+        "model": "gpt-5.6-luna",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-203",
+        "model": "gpt-5.6-sol",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-203",
+        "model": "gpt-5.6-terra",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-203",
+        "model": "gpt-5.6-luna",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-204",
+        "model": "gpt-5.6-sol",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-204",
+        "model": "gpt-5.6-terra",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-204",
+        "model": "gpt-5.6-luna",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-205",
+        "model": "gpt-5.6-sol",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-205",
+        "model": "gpt-5.6-terra",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-205",
+        "model": "gpt-5.6-luna",
+        "run_id": "run-01"
+      }
+    ]
+  },
+  "apply_path": "/home/shifu/projects/skill-trainer/skill/requirements-analysis/SKILL.md",
+  "project_digest": "4f2297bc22e6d07eeb6724d9dfbe6ca6bda003f0b8597424b51b499dae05b802",
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "skill_name": "requirements-analysis",
+    "skill_digest": "a4c4e388bca4821cba3ab4d188567ba44a2b2fa0149414c0d8a6ad4905f7eb2c"
+  },
+  "method": "model"
+}

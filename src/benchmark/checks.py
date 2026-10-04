@@ -26,7 +26,10 @@ def _path(spec, outputs):
 
 
 def _text(spec, answer, outputs):
-    return _path(spec, outputs).read_text(encoding="utf-8") if "path" in spec else answer
+    if "path" not in spec:
+        return answer
+    from .evaluator import artifact_text
+    return artifact_text(_path(spec, outputs))
 
 
 @register_check("non_empty")

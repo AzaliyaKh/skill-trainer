@@ -1,0 +1,53 @@
+id: case-201
+name: Generate GOST-compliant AMC C37.94 technical specification
+category: document-technical-specification
+severity: critical
+output_language: ru
+prompt: По inputs/requirements.md и inputs/gost.pdf подготовь ТЗ на русском языке; сохрани DOCX в outputs/answer.docx.
+execution:
+  mode: agent
+  output_path: answer.docx
+inputs:
+- inputs/requirements.md
+- inputs/gost.pdf
+reference:
+- reference/answer.docx
+expected_outputs:
+- path: answer.docx
+  type: docx
+  required: true
+checks:
+- type: docx_valid
+  path: answer.docx
+  name: valid_docx_document
+  category: format
+  severity: critical
+rubric:
+  context: Оцени документ по requirements.md и применимым положениям ГОСТ 15.016-2016. Учти титульную часть, сокращения, нормативные документы и разделы 1–8; неизвестные
+    значения должны оставаться полями для уточнения.
+  criteria:
+  - name: source_fidelity_and_completeness
+    points: 35
+    levels:
+    - {range: [0, 14], description: 'Существенные параметры потеряны, искажены или дополнены вымышленными сведениями.'}
+    - {range: [15, 28], description: 'Основные требования отражены, но есть заметные пропуски или неточности.'}
+    - {range: [29, 35], description: 'Требования и точные значения отражены полно, согласованно и без вымысла.'}
+  - name: applicable_gost_structure
+    points: 25
+    levels:
+    - {range: [0, 10], description: Структура не соответствует выбранным положениям ГОСТ или содержит много ненужных разделов.}
+    - {range: [11, 20], description: 'Большинство обязательных разделов присутствует, но структура или оформление непоследовательны.'}
+    - {range: [21, 25], description: 'Документ содержит заданные разделы, титульную часть, лист согласования, сокращения и нормативные документы; оформление соответствует
+        применимым требованиям ГОСТ.'}
+  - name: technical_clarity_and_traceability
+    points: 20
+    levels:
+    - {range: [0, 8], description: 'Требования неоднозначны, архитектурные границы и режимы неясны.'}
+    - {range: [9, 16], description: 'Требования в основном ясны, но отдельные связи или режимы раскрыты недостаточно.'}
+    - {range: [17, 20], description: 'Состав, интерфейсы, режимы, аварийное поведение и ограничения изложены однозначно и прослеживаемо.'}
+  - name: acceptance_and_gap_handling
+    points: 20
+    levels:
+    - {range: [0, 8], description: Критерии непроверяемы либо пробелы скрыты предположениями.}
+    - {range: [9, 16], description: 'Основные проверки и открытые вопросы приведены, но покрытие неполно.'}
+    - {range: [17, 20], description: 'Существенные требования имеют проверяемые критерии, а неизвестные сведения явно отделены.'}

@@ -42,15 +42,26 @@ def analyze(summary, runs_dir, thresholds):
 
 
 def main():
-    config = cli_config()
-    root = Path(config["results_dir"])
+    import argparse
+    from .storage import load_config, lifecycle_paths, identifier
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", default="config/benchmark.yaml")
+    parser.add_argument("--version", "--skill-version", dest="version")
+    args = parser.parse_args()
+    config = load_config(args.config)
+    paths = lifecycle_paths(config) if args.version else None
+    version = ((paths["candidate"] if args.version == "candidate" else
+                paths["previous"] if args.version == "previous" else identifier(args.version))
+               if args.version else None)
+    root = paths["regression"] / version if args.version else Path(config["results_dir"])
+    runs_dir = root / "raw" if args.version else root
     summary_path = root / "summary.json"
     if not summary_path.is_file():
         raise SystemExit("Missing DEV summary; run make error-analysis to execute its prerequisites")
     summary = read_json(summary_path)
     if summary.get("complete") is not True:
         raise SystemExit("DEV aggregation is incomplete; fix the failed benchmark before error analysis")
-    result = analyze(summary, root, config["error_analysis"])
+    result = analyze(summary, runs_dir, config["error_analysis"])
     write_json(root / "error_analysis.json", result)
     print(f"Error analysis written to {root / 'error_analysis.json'}")
 

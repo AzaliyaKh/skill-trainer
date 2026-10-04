@@ -1,0 +1,12 @@
+{
+  "model": "gpt-5.6-terra",
+  "execution_mode": "text",
+  "input_tokens": 110120,
+  "output_tokens": 12962,
+  "cost_usd": null,
+  "latency_seconds": 261.0665026300121,
+  "created_files": [
+    "answer.md"
+  ],
+  "output_language": "ru"
+}

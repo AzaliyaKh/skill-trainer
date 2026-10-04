@@ -1,0 +1,12 @@
+{
+  "model": "gpt-5.6-luna",
+  "execution_mode": "agent",
+  "input_tokens": 461607,
+  "output_tokens": 21286,
+  "cost_usd": null,
+  "latency_seconds": 409.7838221819984,
+  "created_files": [
+    "technical-specification.docx"
+  ],
+  "output_language": "ru"
+}

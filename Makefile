@@ -4,18 +4,37 @@ PYTHON := $(VENV)/bin/python
 PIP := $(VENV)/bin/pip
 SKILLS_REF := $(VENV)/bin/skills-ref
 CONFIG ?= config/benchmark.yaml
+VERSION ?=
+FROM ?=
+TO ?=
 SKILL ?= skill/requirements-analysis
-DATASET ?= dataset/example/dev
+# Empty uses dataset.path from CONFIG; DATASET remains an explicit override.
+DATASET ?=
 DATASET_REPORT ?= runs/dataset_validation/dev.json
 # Override when generated artifacts use different project-local roots.
 CLEAN_DIRS ?= runs skill_versions releases build dist .pytest_cache .mypy_cache .ruff_cache htmlcov .coverage
 
-.PHONY: work setup install validate skill-info load-cases validate-dataset dev-benchmark aggregate-dev error-analysis optimize regression holdout review release test smoke check clean distclean optimize-review optimize-apply
+.PHONY: help work setup install validate skill-info load-cases validate-dataset benchmark aggregate error-analysis optimize regression next-version holdout review release test smoke check clean distclean optimize-review approve optimize-apply dev-benchmark aggregate-dev version-benchmark aggregate-version optimize-version
+
+help:
+	@echo "Lifecycle:"
+	@echo "  make benchmark VERSION=v0"
+	@echo "  make aggregate VERSION=v0"
+	@echo "  make error-analysis VERSION=v0"
+	@echo "  make optimize VERSION=v0"
+	@echo "  make regression FROM=v0 TO=v1"
+
+.PHONY: preflight
+preflight:
+	@$(PYTHON) -c "from src.benchmark.storage import load_config; from src.benchmark.provider import make_provider; c=load_config('$(CONFIG)'); p=make_provider('codex', c['providers']['codex']); m=c['models'][0]['model']; print('Checking configured provider/model:', m, flush=True); r=p.generate(model=m, system='Provider readiness check.', prompt='Return OK.', temperature=0, max_tokens=16); print(r.output)"
 
 work:
 	@$(MAKE) validate load-cases test
-	@$(MAKE) optimize
-	@echo "Review the optimization, then run make optimize-apply, regression, holdout, review and release."
+	@$(MAKE) benchmark VERSION=previous
+	@$(MAKE) aggregate VERSION=previous
+	@$(MAKE) error-analysis VERSION=previous
+	@$(MAKE) optimize VERSION=previous
+	@echo "Run the versioned lifecycle shown by make help."
 
 setup:
 	$(SYSTEM_PYTHON) -m venv $(VENV)
@@ -30,31 +49,60 @@ skill-info:
 	@$(SKILLS_REF) read-properties $(SKILL)
 
 load-cases validate-dataset:
-	@$(PYTHON) -m src.benchmark.case --dataset $(DATASET) --output $(DATASET_REPORT)
+	@$(PYTHON) -m src.benchmark.case --config $(CONFIG) $(if $(DATASET),--dataset $(DATASET)) --output $(DATASET_REPORT)
 
-dev-benchmark:
-	@$(PYTHON) -m src.benchmark.benchmark --reuse --config $(CONFIG)
+benchmark:
+	@test -n "$(VERSION)" || (echo "VERSION is required, for example: make benchmark VERSION=v0"; exit 2)
+	@$(PYTHON) -m src.benchmark.benchmark --version $(VERSION) --reuse --config $(CONFIG)
 
-aggregate-dev: dev-benchmark
-	@$(PYTHON) -m src.benchmark.aggregate --config $(CONFIG)
+aggregate:
+	@test -n "$(VERSION)" || (echo "VERSION is required, for example: make aggregate VERSION=v0"; exit 2)
+	@$(PYTHON) -m src.benchmark.aggregate --version $(VERSION) --config $(CONFIG)
 
-error-analysis: aggregate-dev
-	@$(PYTHON) -m src.benchmark.error_analysis --config $(CONFIG)
+error-analysis:
+	@test -n "$(VERSION)" || (echo "VERSION is required, for example: make error-analysis VERSION=v0"; exit 2)
+	@$(PYTHON) -m src.benchmark.error_analysis --version $(VERSION) --config $(CONFIG)
 
-optimize: error-analysis
-	@$(PYTHON) -m src.benchmark.optimizer --config $(CONFIG)
+optimize:
+	@test -n "$(VERSION)" || (echo "VERSION is required, for example: make optimize VERSION=v0"; exit 2)
+	@$(PYTHON) -m src.benchmark.optimizer --evidence-version $(VERSION) --config $(CONFIG)
 
 optimize-review:
 	@$(PYTHON) -m src.benchmark.optimizer --review --config $(CONFIG)
+
+approve:
+	@$(PYTHON) -m src.benchmark.optimizer --approve --config $(CONFIG)
 
 optimize-apply:
 	@$(PYTHON) -m src.benchmark.optimizer --apply --config $(CONFIG)
 
 regression:
-	@$(PYTHON) -m src.benchmark.regression --config $(CONFIG)
+	@test -n "$(FROM)" -a -n "$(TO)" || (echo "FROM and TO are required, for example: make regression FROM=v0 TO=v1"; exit 2)
+	@$(PYTHON) -m src.benchmark.regression --from-version $(FROM) --to-version $(TO) --config $(CONFIG)
+
+# Compatibility aliases; all delegate to the parameterized implementations above.
+dev-benchmark:
+	@$(MAKE) benchmark VERSION=previous CONFIG=$(CONFIG)
+
+aggregate-dev:
+	@$(MAKE) benchmark VERSION=previous CONFIG=$(CONFIG)
+	@$(MAKE) aggregate VERSION=previous CONFIG=$(CONFIG)
+
+version-benchmark:
+	@$(MAKE) benchmark VERSION=$(VERSION) CONFIG=$(CONFIG)
+
+aggregate-version:
+	@$(MAKE) benchmark VERSION=$(VERSION) CONFIG=$(CONFIG)
+	@$(MAKE) aggregate VERSION=$(VERSION) CONFIG=$(CONFIG)
+
+optimize-version:
+	@$(MAKE) optimize VERSION=$(VERSION) CONFIG=$(CONFIG)
+
+next-version:
+	@$(PYTHON) -m src.benchmark.storage --advance-lifecycle --config $(CONFIG)
 
 holdout:
-	@$(PYTHON) -m src.benchmark.benchmark --holdout --config $(CONFIG)
+	@$(PYTHON) -m src.benchmark.benchmark --holdout --config $(CONFIG) $(if $(VERSION),--version $(VERSION))
 
 review:
 	@$(PYTHON) -m src.benchmark.review --config $(CONFIG)

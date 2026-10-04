@@ -394,11 +394,25 @@ def aggregate_all(
 
 
 def main() -> None:
-    config = cli_config()
-    runs_dir = Path(config.get("results_dir", "runs/dev"))
+    import argparse
+    from .storage import load_config, lifecycle_paths, identifier
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", default="config/benchmark.yaml")
+    parser.add_argument("--version", "--skill-version", dest="version")
+    args = parser.parse_args()
+    config = load_config(args.config)
+    if args.version:
+        paths = lifecycle_paths(config)
+        version = (paths["candidate"] if args.version == "candidate" else
+                   paths["previous"] if args.version == "previous" else identifier(args.version))
+        root = paths["regression"] / version
+        runs_dir = root / "raw"
+    else:
+        root = Path(config.get("results_dir", "runs/dev"))
+        runs_dir = root
     aggregation = config.get("aggregation", {})
     result = aggregate_all(runs_dir, aggregation.get("gates", {}), aggregation.get("confidence_level", 0.95))
-    output_path = runs_dir / "summary.json"
+    output_path = root / "summary.json"
     write_json(output_path, result)
     print(f"Aggregation written to {output_path}")
     if not result["complete"]:

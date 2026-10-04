@@ -1,0 +1,74 @@
+id: case-206
+name: Generate universal AMC base board technical specification
+category: hardware-technical-specification
+severity: critical
+output_language: ru
+prompt: По inputs/requirements.md подготовь ТЗ на русском языке; сохрани DOCX в outputs/technical-specification.docx.
+execution:
+  mode: agent
+  output_path: technical-specification.docx
+inputs:
+- inputs/requirements.md
+reference:
+- reference/ТЗ_AMC_Базовый_Модуль.docx
+expected_outputs:
+- path: technical-specification.docx
+  type: docx
+  required: true
+checks:
+- type: docx_valid
+  path: technical-specification.docx
+  severity: critical
+- type: non_empty
+  path: technical-specification.docx
+- type: contains
+  path: technical-specification.docx
+  text: Назначение
+- type: contains
+  path: technical-specification.docx
+  text: Технические требования
+- type: contains
+  path: technical-specification.docx
+  text: Критерии приёмки
+- type: contains
+  path: technical-specification.docx
+  text: Открытые вопросы
+- type: contains
+  path: technical-specification.docx
+  text: Golden Image
+- type: contains
+  path: technical-specification.docx
+  text: M0–M7
+- type: contains
+  path: technical-specification.docx
+  text: 100 мкс
+- type: contains
+  path: technical-specification.docx
+  text: 300 фс
+rubric:
+  context: Оцени ТЗ только по входным требованиям и reference. Не поощряй вымышленные параметры или снятие явно указанной неопределённости.
+  criteria:
+  - name: source_fidelity_and_completeness
+    points: 40
+    levels:
+    - {range: [0, 16], description: 'Ключевые требования пропущены, перепутаны или дополнены неподтверждёнными фактами.'}
+    - {range: [17, 32], description: 'Основные требования сохранены, но есть существенные пропуски или неточности.'}
+    - {range: [33, 40], description: 'Назначение, состав, точные значения и ограничения отражены полно и без вымысла.'}
+  - name: architecture_interfaces_and_behavior
+    points: 25
+    levels:
+    - {range: [0, 10], description: 'Границы компонентов, интерфейсы и режимы работы неясны.'}
+    - {range: [11, 20], description: 'Архитектура и интерфейсы в основном описаны, но часть связей или режимов потеряна.'}
+    - {range: [21, 25], description: 'Аппаратная часть, логика, интерфейсы, потоки и режимы разделены и согласованы.'}
+  - name: safety_diagnostics_and_verification
+    points: 20
+    levels:
+    - {range: [0, 8], description: 'Аварийное поведение, диагностика или проверка требований почти не определены.'}
+    - {range: [9, 16], description: 'Основные аварии и проверки учтены, но критерии покрывают их неполно.'}
+    - {range: [17, 20], description: 'Безопасные состояния и диагностика явны, критерии измеримы и покрывают существенные требования.'}
+  - name: structure_and_gap_handling
+    points: 15
+    levels:
+    - {range: [0, 6], description: ТЗ трудно проверять; пробелы скрыты или заполнены предположениями.}
+    - {range: [7, 12], description: 'Структура понятна, но отдельные пробелы или допущения оформлены слабо.'}
+    - {range: [13, 15], description: ТЗ компактно и прослеживаемо; открытые вопросы явно отделены от требований.}

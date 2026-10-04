@@ -7,6 +7,7 @@ from .review import validate_feedback
 from .storage import cli_config, lifecycle_paths, read_json, write_json, digest_tree, digest_json
 from .checks import validate_skill
 from .regression import compare
+from .regression import regression_report_path
 
 
 def release(config):
@@ -15,7 +16,7 @@ def release(config):
     if not validation["valid"]:
         raise ValueError(f"Candidate validation failed: {validation['errors']}")
     candidate_digest = validation["skill_digest"]
-    regression = read_json(paths["regression"] / "regression.json")
+    regression = read_json(regression_report_path(config, paths["previous"], paths["candidate"]))
     holdout = read_json(paths["holdout"] / "holdout.json")
     if any(report.get("candidate_digest") != candidate_digest or report.get("passed") is not True
            for report in (regression, holdout)):

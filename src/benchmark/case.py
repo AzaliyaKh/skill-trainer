@@ -205,13 +205,15 @@ def validate_case_data(data: dict, path: Path) -> None:
 
 def main():
     import argparse
-    from .storage import write_json
+    from .storage import load_config, write_json
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", default="dataset/example/dev")
+    parser.add_argument("--config", default="config/benchmark.yaml")
+    parser.add_argument("--dataset", help="Override dataset.path from configuration")
     parser.add_argument("--output", default="runs/dataset_validation/dev.json")
     args = parser.parse_args()
     try:
-        cases = load_all_cases(args.dataset)
+        dataset = args.dataset if args.dataset is not None else load_config(args.config)["dataset"]["path"]
+        cases = load_all_cases(dataset)
         result = {"valid": True, "cases": [c.id for c in cases], "errors": []}
     except (ValueError, KeyError, TypeError, OSError, yaml.YAMLError) as exc:
         result = {"valid": False, "errors": [str(exc)]}

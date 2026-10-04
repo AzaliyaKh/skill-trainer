@@ -1,0 +1,36 @@
+{
+  "status": "complete",
+  "evidence_digest": "22b492b5ef48706e09c91ec476e574d93992b29580b461bf00b27eeb4e793af4",
+  "reviews": [
+    {
+      "change_id": "change-001",
+      "approved": true,
+      "feedback": ""
+    },
+    {
+      "change_id": "change-002",
+      "approved": true,
+      "feedback": ""
+    },
+    {
+      "change_id": "change-003",
+      "approved": true,
+      "feedback": ""
+    },
+    {
+      "change_id": "change-004",
+      "approved": true,
+      "feedback": ""
+    },
+    {
+      "change_id": "change-005",
+      "approved": true,
+      "feedback": ""
+    },
+    {
+      "change_id": "change-006",
+      "approved": true,
+      "feedback": ""
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+id: case-205
+name: Generate AMC STM technical specification
+category: hardware-technical-specification
+severity: critical
+prompt: По inputs/requirements.md и inputs/gost.pdf подготовь ТЗ на русском языке; сохрани DOCX в outputs/technical-specification.docx.
+execution:
+  mode: agent
+  output_path: technical-specification.docx
+inputs:
+- inputs/requirements.md
+- inputs/gost.pdf
+reference:
+- reference/ТЗ_AMC_STM1.docx
+expected_outputs:
+- path: technical-specification.docx
+  type: docx
+  required: true
+checks:
+- type: docx_valid
+  path: technical-specification.docx
+  severity: critical
+rubric:
+  context: Оцени содержание DOCX по requirements.md, приложенному ГОСТ 15.016–2016 и reference. Проверь восемь заданных разделов, полноту исходных требований и оформление;
+    не поощряй вымышленные параметры, новые разделы или заполнение неизвестных реквизитов.
+  criteria:
+  - name: source_fidelity_and_completeness
+    points: 40
+    levels:
+    - {range: [0, 16], description: 'Ключевые требования пропущены, перепутаны или дополнены неподтверждёнными фактами.'}
+    - {range: [17, 32], description: 'Основные требования сохранены, но есть существенные пропуски или неточности.'}
+    - {range: [33, 40], description: 'Назначение, состав, точные значения и ограничения отражены полно и без вымысла.'}
+  - name: architecture_interfaces_and_behavior
+    points: 25
+    levels:
+    - {range: [0, 10], description: 'Границы компонентов, интерфейсы и режимы работы неясны.'}
+    - {range: [11, 20], description: 'Архитектура и интерфейсы в основном описаны, но часть связей или режимов потеряна.'}
+    - {range: [21, 25], description: 'Аппаратная часть, логика, интерфейсы, потоки и режимы разделены и согласованы.'}
+  - name: safety_diagnostics_and_verification
+    points: 20
+    levels:
+    - {range: [0, 8], description: 'Аварийное поведение, диагностика или проверка требований почти не определены.'}
+    - {range: [9, 16], description: 'Основные аварии и проверки учтены, но критерии покрывают их неполно.'}
+    - {range: [17, 20], description: 'Безопасные состояния и диагностика явны, критерии измеримы и покрывают существенные требования.'}
+  - name: structure_and_gap_handling
+    points: 15
+    levels:
+    - {range: [0, 6], description: ТЗ трудно проверять; пробелы скрыты или заполнены предположениями.}
+    - {range: [7, 12], description: 'Структура понятна, но отдельные пробелы или допущения оформлены слабо.'}
+    - {range: [13, 15], description: ТЗ компактно и прослеживаемо; открытые вопросы явно отделены от требований.}
+output_language: ru
+document_checks:
+  required_sections:
+  - 1. Наименование, шифр, основание, исполнители и сроки ОКР
+  - 2. Цель выполнения, наименование, назначение и область применения изделия
+  - 3. Технические требования к изделию
+  - 4. Технико-экономические требования
+  - 5. Требования к видам обеспечения
+  - 6. Требования к сырью, материалам и комплектующим изделиям
+  - 7. Требования к консервации, упаковке и маркировке
+  - 8. Специальные требования
+  required_terms:
+  - 155,52 Мбит/с
+  - 622,08 Мбит/с
+  - 63×VC-12
+  - '0x02'
+  forbidden_sections:
+  - Требования к учебно-тренировочным средствам
+  - Этапы выполнения ОКР
+  - Порядок выполнения и приемки этапов ОКР

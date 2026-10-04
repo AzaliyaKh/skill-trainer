@@ -1,0 +1,80 @@
+id: case-003
+name: Generate URL shortener technical specification
+category: technical-specification
+severity: major
+output_language: ru
+
+prompt: |
+  Изучи требования к URL Shortener REST API.
+  Сформируй краткое структурированное техническое задание в Markdown.
+  Не выдавай неуказанные детали за подтверждённые требования.
+
+execution:
+  mode: text
+  output_path: answer.md
+
+inputs:
+  - inputs/requirements.md
+
+reference:
+  - reference/answer.md
+
+expected_outputs:
+  - path: answer.md
+    type: text
+    required: true
+
+checks:
+  - type: non_empty
+  - type: contains
+    text: POST /shorten
+  - type: contains
+    text: GET /{code}
+  - type: contains
+    text: DELETE /{code}
+  - type: contains
+    text: "400"
+  - type: contains
+    text: "404"
+  - type: contains
+    text: Критерии приёмки
+
+rubric:
+  context: Оцени краткое ТЗ только по исходным требованиям; неподтверждённые детали должны быть явно обозначены как допущения или вопросы.
+  criteria:
+    - name: requirements_fidelity
+      points: 35
+      levels:
+        - range: [0, 14]
+          description: Существенные требования потеряны или искажены.
+        - range: [15, 28]
+          description: Основные требования отражены, но есть пропуски или неточности.
+        - range: [29, 35]
+          description: Все исходные требования отражены точно и прослеживаемо.
+    - name: api_behavior
+      points: 25
+      levels:
+        - range: [0, 10]
+          description: Поведение endpoint-ов описано фрагментарно или противоречиво.
+        - range: [11, 20]
+          description: Основные запросы и ответы описаны, но не все ветви поведения ясны.
+        - range: [21, 25]
+          description: Все endpoint-ы, успешные результаты и ключевые ветви ошибок описаны ясно.
+    - name: validation_and_errors
+      points: 20
+      levels:
+        - range: [0, 8]
+          description: Валидация, HTTP 400/404 или JSON-ошибки описаны неверно.
+        - range: [9, 16]
+          description: Большинство правил присутствует, но остаются неоднозначности.
+        - range: [17, 20]
+          description: Валидация схемы и кода, HTTP 400/404 и формат ответов заданы последовательно.
+    - name: acceptance_and_assumptions
+      points: 20
+      levels:
+        - range: [0, 8]
+          description: Нет проверяемых критериев или вымышленные детали представлены как требования.
+        - range: [9, 16]
+          description: Есть критерии и допущения, но они неполны или слабо отделены.
+        - range: [17, 20]
+          description: Критерии проверяемы, а неизвестные детали явно отделены от требований.

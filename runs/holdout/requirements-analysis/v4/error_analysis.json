@@ -1,0 +1,184 @@
+{
+  "cases": {
+    "case-206": {
+      "gpt-5.6-luna": {
+        "has_errors": false,
+        "issues": [],
+        "failed_checks": {},
+        "judge_reasoning": {
+          "source_fidelity_and_completeness": [
+            {
+              "run": "run-01",
+              "name": "source_fidelity_and_completeness",
+              "score": 35,
+              "max_score": 40,
+              "reasoning": "Основные требования и численные параметры отражены полно, но пропущены или ослаблены отдельные элементы исходного ТЗ, включая определения сокращений, часть формулировок назначения и детализацию нормативного обеспечения."
+            }
+          ],
+          "architecture_interfaces_and_behavior": [
+            {
+              "run": "run-01",
+              "name": "architecture_interfaces_and_behavior",
+              "score": 22,
+              "max_score": 25,
+              "reasoning": "Двухплатная архитектура, B2B, питание, тактирование, MMC, Fabric/Base, загрузка и режимы отказа описаны согласованно, но часть механических и интерфейсных деталей представлена укрупнённо."
+            }
+          ],
+          "safety_diagnostics_and_verification": [
+            {
+              "run": "run-01",
+              "name": "safety_diagnostics_and_verification",
+              "score": 18,
+              "max_score": 20,
+              "reasoning": "Аварийные сценарии, fallback, независимость MMC, защита PS1#, диагностика и измеримые критерии приёмки охвачены хорошо, однако покрытие отдельных требований и методики испытаний остаётся неполным."
+            }
+          ],
+          "structure_and_gap_handling": [
+            {
+              "run": "run-01",
+              "name": "structure_and_gap_handling",
+              "score": 12,
+              "max_score": 15,
+              "reasoning": "Документ хорошо структурирован и содержит открытые вопросы и таблицу приёмки, но дублирует разделы и ошибочно объявляет отсутствующими определения, которые присутствуют в reference."
+            }
+          ]
+        },
+        "runs": [
+          {
+            "run": "run-01",
+            "score": 87.0
+          }
+        ]
+      },
+      "gpt-5.6-sol": {
+        "has_errors": true,
+        "issues": [
+          {
+            "type": "weak_criterion",
+            "name": "source_fidelity_and_completeness",
+            "mean": 77.5
+          }
+        ],
+        "failed_checks": {},
+        "judge_reasoning": {
+          "source_fidelity_and_completeness": [
+            {
+              "run": "run-01",
+              "name": "source_fidelity_and_completeness",
+              "score": 31,
+              "max_score": 40,
+              "reasoning": "Основные требования и численные параметры сохранены, но пропущены или заменены точные реквизиты исполнителя и полного наименования, определения терминов из reference, а также допущено небольшое искажение требований к защищённости цепей питания."
+            }
+          ],
+          "architecture_interfaces_and_behavior": [
+            {
+              "run": "run-01",
+              "name": "architecture_interfaces_and_behavior",
+              "score": 22,
+              "max_score": 25,
+              "reasoning": "Двухплатная архитектура, B2B, питание, MMC, Fabric/Base, загрузка, синхронизация и режимы отказа описаны последовательно, хотя часть связей и функционального назначения передана укрупнённо."
+            }
+          ],
+          "safety_diagnostics_and_verification": [
+            {
+              "run": "run-01",
+              "name": "safety_diagnostics_and_verification",
+              "score": 19,
+              "max_score": 20,
+              "reasoning": "Аварийное снятие питания, fallback, независимость MMC, диагностика, производственный контроль и измеримые критерии приёмки покрыты хорошо, с отдельными неуточнёнными методиками расчёта и испытаний."
+            }
+          ],
+          "structure_and_gap_handling": [
+            {
+              "run": "run-01",
+              "name": "structure_and_gap_handling",
+              "score": 14,
+              "max_score": 15,
+              "reasoning": "Документ хорошо структурирован и содержит трассируемые требования, критерии приёмки и отдельный перечень открытых вопросов, хотя чрезмерное заполнение таблицы неопределённостей заменяет доступные в reference сведения."
+            }
+          ]
+        },
+        "runs": [
+          {
+            "run": "run-01",
+            "score": 86.0
+          }
+        ]
+      },
+      "gpt-5.6-terra": {
+        "has_errors": false,
+        "issues": [],
+        "failed_checks": {},
+        "judge_reasoning": {
+          "source_fidelity_and_completeness": [
+            {
+              "run": "run-01",
+              "name": "source_fidelity_and_completeness",
+              "score": 36,
+              "max_score": 40,
+              "reasoning": "Основные требования и численные параметры отражены полно, но сокращено точное наименование ОКР, пропущена явно указанная организация-исполнитель и частично утрачены отдельные формулировки назначения и состава работ."
+            }
+          ],
+          "architecture_interfaces_and_behavior": [
+            {
+              "run": "run-01",
+              "name": "architecture_interfaces_and_behavior",
+              "score": 23,
+              "max_score": 25,
+              "reasoning": "Аппаратная архитектура, B2B, MMC, Fabric/Base, питание, синхронизация и режимы загрузки согласованы и описаны с измеримыми параметрами."
+            }
+          ],
+          "safety_diagnostics_and_verification": [
+            {
+              "run": "run-01",
+              "name": "safety_diagnostics_and_verification",
+              "score": 19,
+              "max_score": 20,
+              "reasoning": "Аварийные сценарии, fallback, PS1#, диагностика, производственный контроль и приемочные проверки покрыты явно и в основном измеримо."
+            }
+          ],
+          "structure_and_gap_handling": [
+            {
+              "run": "run-01",
+              "name": "structure_and_gap_handling",
+              "score": 14,
+              "max_score": 15,
+              "reasoning": "Документ хорошо структурирован, содержит трассируемую таблицу приемки и отдельные открытые вопросы, хотя часть уже заданных reference-реквизитов ошибочно оставлена как неопределённая."
+            }
+          ]
+        },
+        "runs": [
+          {
+            "run": "run-01",
+            "score": 92.0
+          }
+        ]
+      }
+    }
+  },
+  "provenance": {
+    "split": "holdout",
+    "skill_digest": "7d65fabd56d5647371c5fa5baa1371db290d1b9cc0245b2cb221263e72d8c5f2",
+    "dataset_digest": "88a7116a81aa383d63421e665a61b7f03d3d855a5d1daee80060baa7f2c55411",
+    "dataset_path": "/home/shifu/projects/skill-trainer/dataset/amc/holdout",
+    "settings_digest": "292fff05f7bb2b81fb8e8198deacaa0d09e0bdf618d5e38c97134b4052ec377b",
+    "expected_runs": [
+      {
+        "case_id": "case-206",
+        "model": "gpt-5.6-sol",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-206",
+        "model": "gpt-5.6-terra",
+        "run_id": "run-01"
+      },
+      {
+        "case_id": "case-206",
+        "model": "gpt-5.6-luna",
+        "run_id": "run-01"
+      }
+    ]
+  },
+  "missing_runs": []
+}

@@ -1,0 +1,386 @@
+{
+  "evidence_digest": "745f77eaccd9ccf9bd643cfc325cf1591abce8b2ec28b7cd773c24537558d619",
+  "runs": [
+    {
+      "split": "dev",
+      "case_id": "case-201",
+      "model": "gpt-5.6-sol",
+      "run_id": "run-01",
+      "configured_model": "gpt-5.6-sol",
+      "provider": "codex",
+      "outputs": "runs/regression/requirements-analysis/v4/raw/case-201/gpt-5.6-sol/run-01/workspace/outputs",
+      "prompt": "По inputs/requirements.md и inputs/gost.pdf подготовь ТЗ на русском языке; сохрани DOCX в outputs/answer.docx.",
+      "inputs": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-201/inputs/requirements.md",
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-201/inputs/gost.pdf"
+      ],
+      "usage": {
+        "model": "gpt-5.6-sol",
+        "execution_mode": "agent",
+        "input_tokens": 859515,
+        "output_tokens": 15699,
+        "cost_usd": null,
+        "latency_seconds": 364.8872413710051,
+        "created_files": [
+          "answer.docx"
+        ],
+        "output_language": "ru"
+      },
+      "checks": "runs/regression/requirements-analysis/v4/raw/case-201/gpt-5.6-sol/run-01/checks.json",
+      "evaluation": "runs/regression/requirements-analysis/v4/raw/case-201/gpt-5.6-sol/run-01/evaluation.json",
+      "reference": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-201/reference/answer.docx"
+      ],
+      "previous_outputs": "runs/regression/requirements-analysis/v3/raw/case-201/gpt-5.6-sol/run-01/workspace/outputs"
+    },
+    {
+      "split": "dev",
+      "case_id": "case-201",
+      "model": "gpt-5.6-terra",
+      "run_id": "run-01",
+      "configured_model": "gpt-5.6-terra",
+      "provider": "codex",
+      "outputs": "runs/regression/requirements-analysis/v4/raw/case-201/gpt-5.6-terra/run-01/workspace/outputs",
+      "prompt": "По inputs/requirements.md и inputs/gost.pdf подготовь ТЗ на русском языке; сохрани DOCX в outputs/answer.docx.",
+      "inputs": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-201/inputs/requirements.md",
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-201/inputs/gost.pdf"
+      ],
+      "usage": {
+        "model": "gpt-5.6-terra",
+        "execution_mode": "agent",
+        "input_tokens": 769763,
+        "output_tokens": 15861,
+        "cost_usd": null,
+        "latency_seconds": 340.3203048449941,
+        "created_files": [
+          "answer.docx"
+        ],
+        "output_language": "ru"
+      },
+      "checks": "runs/regression/requirements-analysis/v4/raw/case-201/gpt-5.6-terra/run-01/checks.json",
+      "evaluation": "runs/regression/requirements-analysis/v4/raw/case-201/gpt-5.6-terra/run-01/evaluation.json",
+      "reference": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-201/reference/answer.docx"
+      ],
+      "previous_outputs": "runs/regression/requirements-analysis/v3/raw/case-201/gpt-5.6-terra/run-01/workspace/outputs"
+    },
+    {
+      "split": "dev",
+      "case_id": "case-201",
+      "model": "gpt-5.6-luna",
+      "run_id": "run-01",
+      "configured_model": "gpt-5.6-luna",
+      "provider": "codex",
+      "outputs": "runs/regression/requirements-analysis/v4/raw/case-201/gpt-5.6-luna/run-01/workspace/outputs",
+      "prompt": "По inputs/requirements.md и inputs/gost.pdf подготовь ТЗ на русском языке; сохрани DOCX в outputs/answer.docx.",
+      "inputs": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-201/inputs/requirements.md",
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-201/inputs/gost.pdf"
+      ],
+      "usage": {
+        "model": "gpt-5.6-luna",
+        "execution_mode": "agent",
+        "input_tokens": 1700009,
+        "output_tokens": 23322,
+        "cost_usd": null,
+        "latency_seconds": 491.8849383199995,
+        "created_files": [
+          "answer.docx"
+        ],
+        "output_language": "ru"
+      },
+      "checks": "runs/regression/requirements-analysis/v4/raw/case-201/gpt-5.6-luna/run-01/checks.json",
+      "evaluation": "runs/regression/requirements-analysis/v4/raw/case-201/gpt-5.6-luna/run-01/evaluation.json",
+      "reference": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-201/reference/answer.docx"
+      ],
+      "previous_outputs": "runs/regression/requirements-analysis/v3/raw/case-201/gpt-5.6-luna/run-01/workspace/outputs"
+    },
+    {
+      "split": "dev",
+      "case_id": "case-202",
+      "model": "gpt-5.6-sol",
+      "run_id": "run-01",
+      "configured_model": "gpt-5.6-sol",
+      "provider": "codex",
+      "outputs": "runs/regression/requirements-analysis/v4/raw/case-202/gpt-5.6-sol/run-01/workspace/outputs",
+      "prompt": "По inputs/requirements.md и inputs/gost.pdf подготовь ТЗ на русском языке; сохрани DOCX в outputs/technical-specification.docx.",
+      "inputs": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-202/inputs/requirements.md",
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-202/inputs/gost.pdf"
+      ],
+      "usage": {
+        "model": "gpt-5.6-sol",
+        "execution_mode": "agent",
+        "input_tokens": 1551187,
+        "output_tokens": 22603,
+        "cost_usd": null,
+        "latency_seconds": 296.588909544982,
+        "created_files": [
+          "technical-specification.docx"
+        ],
+        "output_language": "ru"
+      },
+      "checks": "runs/regression/requirements-analysis/v4/raw/case-202/gpt-5.6-sol/run-01/checks.json",
+      "evaluation": "runs/regression/requirements-analysis/v4/raw/case-202/gpt-5.6-sol/run-01/evaluation.json",
+      "reference": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-202/reference/ТЗ_AMC_E1.docx"
+      ],
+      "previous_outputs": "runs/regression/requirements-analysis/v3/raw/case-202/gpt-5.6-sol/run-01/workspace/outputs"
+    },
+    {
+      "split": "dev",
+      "case_id": "case-202",
+      "model": "gpt-5.6-terra",
+      "run_id": "run-01",
+      "configured_model": "gpt-5.6-terra",
+      "provider": "codex",
+      "outputs": "runs/regression/requirements-analysis/v4/raw/case-202/gpt-5.6-terra/run-01/workspace/outputs",
+      "prompt": "По inputs/requirements.md и inputs/gost.pdf подготовь ТЗ на русском языке; сохрани DOCX в outputs/technical-specification.docx.",
+      "inputs": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-202/inputs/requirements.md",
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-202/inputs/gost.pdf"
+      ],
+      "usage": {
+        "model": "gpt-5.6-terra",
+        "execution_mode": "agent",
+        "input_tokens": 776965,
+        "output_tokens": 11645,
+        "cost_usd": null,
+        "latency_seconds": 112.10901170701254,
+        "created_files": [
+          "technical-specification.docx"
+        ],
+        "output_language": "ru"
+      },
+      "checks": "runs/regression/requirements-analysis/v4/raw/case-202/gpt-5.6-terra/run-01/checks.json",
+      "evaluation": "runs/regression/requirements-analysis/v4/raw/case-202/gpt-5.6-terra/run-01/evaluation.json",
+      "reference": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-202/reference/ТЗ_AMC_E1.docx"
+      ],
+      "previous_outputs": "runs/regression/requirements-analysis/v3/raw/case-202/gpt-5.6-terra/run-01/workspace/outputs"
+    },
+    {
+      "split": "dev",
+      "case_id": "case-202",
+      "model": "gpt-5.6-luna",
+      "run_id": "run-01",
+      "configured_model": "gpt-5.6-luna",
+      "provider": "codex",
+      "outputs": "runs/regression/requirements-analysis/v4/raw/case-202/gpt-5.6-luna/run-01/workspace/outputs",
+      "prompt": "По inputs/requirements.md и inputs/gost.pdf подготовь ТЗ на русском языке; сохрани DOCX в outputs/technical-specification.docx.",
+      "inputs": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-202/inputs/requirements.md",
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-202/inputs/gost.pdf"
+      ],
+      "usage": {
+        "model": "gpt-5.6-luna",
+        "execution_mode": "agent",
+        "input_tokens": 994203,
+        "output_tokens": 17240,
+        "cost_usd": null,
+        "latency_seconds": 369.49598602799233,
+        "created_files": [
+          "technical-specification.docx"
+        ],
+        "output_language": "ru"
+      },
+      "checks": "runs/regression/requirements-analysis/v4/raw/case-202/gpt-5.6-luna/run-01/checks.json",
+      "evaluation": "runs/regression/requirements-analysis/v4/raw/case-202/gpt-5.6-luna/run-01/evaluation.json",
+      "reference": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-202/reference/ТЗ_AMC_E1.docx"
+      ],
+      "previous_outputs": "runs/regression/requirements-analysis/v3/raw/case-202/gpt-5.6-luna/run-01/workspace/outputs"
+    },
+    {
+      "split": "dev",
+      "case_id": "case-203",
+      "model": "gpt-5.6-sol",
+      "run_id": "run-01",
+      "configured_model": "gpt-5.6-sol",
+      "provider": "codex",
+      "outputs": "runs/regression/requirements-analysis/v4/raw/case-203/gpt-5.6-sol/run-01/workspace/outputs",
+      "prompt": "По inputs/requirements.md и inputs/gost.pdf подготовь ТЗ на русском языке; сохрани DOCX в outputs/technical-specification.docx.",
+      "inputs": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-203/inputs/requirements.md",
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-203/inputs/gost.pdf"
+      ],
+      "usage": {
+        "model": "gpt-5.6-sol",
+        "execution_mode": "agent",
+        "input_tokens": 921525,
+        "output_tokens": 17299,
+        "cost_usd": null,
+        "latency_seconds": 399.84366613498423,
+        "created_files": [
+          "technical-specification.docx"
+        ],
+        "output_language": "ru"
+      },
+      "checks": "runs/regression/requirements-analysis/v4/raw/case-203/gpt-5.6-sol/run-01/checks.json",
+      "evaluation": "runs/regression/requirements-analysis/v4/raw/case-203/gpt-5.6-sol/run-01/evaluation.json",
+      "reference": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-203/reference/ТЗ_AMC_E2E3.docx"
+      ],
+      "previous_outputs": "runs/regression/requirements-analysis/v3/raw/case-203/gpt-5.6-sol/run-01/workspace/outputs"
+    },
+    {
+      "split": "dev",
+      "case_id": "case-203",
+      "model": "gpt-5.6-terra",
+      "run_id": "run-01",
+      "configured_model": "gpt-5.6-terra",
+      "provider": "codex",
+      "outputs": "runs/regression/requirements-analysis/v4/raw/case-203/gpt-5.6-terra/run-01/workspace/outputs",
+      "prompt": "По inputs/requirements.md и inputs/gost.pdf подготовь ТЗ на русском языке; сохрани DOCX в outputs/technical-specification.docx.",
+      "inputs": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-203/inputs/requirements.md",
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-203/inputs/gost.pdf"
+      ],
+      "usage": {
+        "model": "gpt-5.6-terra",
+        "execution_mode": "agent",
+        "input_tokens": 1108813,
+        "output_tokens": 19962,
+        "cost_usd": null,
+        "latency_seconds": 400.3193307860056,
+        "created_files": [
+          "technical-specification.docx"
+        ],
+        "output_language": "ru"
+      },
+      "checks": "runs/regression/requirements-analysis/v4/raw/case-203/gpt-5.6-terra/run-01/checks.json",
+      "evaluation": "runs/regression/requirements-analysis/v4/raw/case-203/gpt-5.6-terra/run-01/evaluation.json",
+      "reference": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-203/reference/ТЗ_AMC_E2E3.docx"
+      ],
+      "previous_outputs": "runs/regression/requirements-analysis/v3/raw/case-203/gpt-5.6-terra/run-01/workspace/outputs"
+    },
+    {
+      "split": "dev",
+      "case_id": "case-203",
+      "model": "gpt-5.6-luna",
+      "run_id": "run-01",
+      "configured_model": "gpt-5.6-luna",
+      "provider": "codex",
+      "outputs": "runs/regression/requirements-analysis/v4/raw/case-203/gpt-5.6-luna/run-01/workspace/outputs",
+      "prompt": "По inputs/requirements.md и inputs/gost.pdf подготовь ТЗ на русском языке; сохрани DOCX в outputs/technical-specification.docx.",
+      "inputs": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-203/inputs/requirements.md",
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-203/inputs/gost.pdf"
+      ],
+      "usage": {
+        "model": "gpt-5.6-luna",
+        "execution_mode": "agent",
+        "input_tokens": 1141142,
+        "output_tokens": 27177,
+        "cost_usd": null,
+        "latency_seconds": 555.2139121580112,
+        "created_files": [
+          "technical-specification.docx"
+        ],
+        "output_language": "ru"
+      },
+      "checks": "runs/regression/requirements-analysis/v4/raw/case-203/gpt-5.6-luna/run-01/checks.json",
+      "evaluation": "runs/regression/requirements-analysis/v4/raw/case-203/gpt-5.6-luna/run-01/evaluation.json",
+      "reference": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/dev/case-203/reference/ТЗ_AMC_E2E3.docx"
+      ],
+      "previous_outputs": "runs/regression/requirements-analysis/v3/raw/case-203/gpt-5.6-luna/run-01/workspace/outputs"
+    },
+    {
+      "split": "holdout",
+      "case_id": "case-206",
+      "model": "gpt-5.6-sol",
+      "run_id": "run-01",
+      "configured_model": "gpt-5.6-sol",
+      "provider": "codex",
+      "outputs": "runs/holdout/requirements-analysis/v4/raw/case-206/gpt-5.6-sol/run-01/workspace/outputs",
+      "prompt": "По inputs/requirements.md подготовь ТЗ на русском языке в Markdown.",
+      "inputs": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/holdout/case-206/inputs/requirements.md"
+      ],
+      "usage": {
+        "model": "gpt-5.6-sol",
+        "execution_mode": "text",
+        "input_tokens": 105539,
+        "output_tokens": 11736,
+        "cost_usd": null,
+        "latency_seconds": 233.12939760799054,
+        "created_files": [
+          "answer.md"
+        ],
+        "output_language": "ru"
+      },
+      "checks": "runs/holdout/requirements-analysis/v4/raw/case-206/gpt-5.6-sol/run-01/checks.json",
+      "evaluation": "runs/holdout/requirements-analysis/v4/raw/case-206/gpt-5.6-sol/run-01/evaluation.json",
+      "reference": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/holdout/case-206/reference/ТЗ_AMC_Базовый_Модуль.docx"
+      ],
+      "previous_outputs": null
+    },
+    {
+      "split": "holdout",
+      "case_id": "case-206",
+      "model": "gpt-5.6-terra",
+      "run_id": "run-01",
+      "configured_model": "gpt-5.6-terra",
+      "provider": "codex",
+      "outputs": "runs/holdout/requirements-analysis/v4/raw/case-206/gpt-5.6-terra/run-01/workspace/outputs",
+      "prompt": "По inputs/requirements.md подготовь ТЗ на русском языке в Markdown.",
+      "inputs": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/holdout/case-206/inputs/requirements.md"
+      ],
+      "usage": {
+        "model": "gpt-5.6-terra",
+        "execution_mode": "text",
+        "input_tokens": 110120,
+        "output_tokens": 12962,
+        "cost_usd": null,
+        "latency_seconds": 261.0665026300121,
+        "created_files": [
+          "answer.md"
+        ],
+        "output_language": "ru"
+      },
+      "checks": "runs/holdout/requirements-analysis/v4/raw/case-206/gpt-5.6-terra/run-01/checks.json",
+      "evaluation": "runs/holdout/requirements-analysis/v4/raw/case-206/gpt-5.6-terra/run-01/evaluation.json",
+      "reference": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/holdout/case-206/reference/ТЗ_AMC_Базовый_Модуль.docx"
+      ],
+      "previous_outputs": null
+    },
+    {
+      "split": "holdout",
+      "case_id": "case-206",
+      "model": "gpt-5.6-luna",
+      "run_id": "run-01",
+      "configured_model": "gpt-5.6-luna",
+      "provider": "codex",
+      "outputs": "runs/holdout/requirements-analysis/v4/raw/case-206/gpt-5.6-luna/run-01/workspace/outputs",
+      "prompt": "По inputs/requirements.md подготовь ТЗ на русском языке в Markdown.",
+      "inputs": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/holdout/case-206/inputs/requirements.md"
+      ],
+      "usage": {
+        "model": "gpt-5.6-luna",
+        "execution_mode": "text",
+        "input_tokens": 33797,
+        "output_tokens": 5509,
+        "cost_usd": null,
+        "latency_seconds": 110.94775041201501,
+        "created_files": [
+          "answer.md"
+        ],
+        "output_language": "ru"
+      },
+      "checks": "runs/holdout/requirements-analysis/v4/raw/case-206/gpt-5.6-luna/run-01/checks.json",
+      "evaluation": "runs/holdout/requirements-analysis/v4/raw/case-206/gpt-5.6-luna/run-01/evaluation.json",
+      "reference": [
+        "/home/shifu/projects/skill-trainer/dataset/amc/holdout/case-206/reference/ТЗ_AMC_Базовый_Модуль.docx"
+      ],
+      "previous_outputs": null
+    }
+  ]
+}

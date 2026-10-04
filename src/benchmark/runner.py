@@ -261,27 +261,59 @@ def run_case(
     )
 
 
-def run_and_evaluate(config, model_config, case, skill_content, skill_dir, run_id, run_dir, get_provider):
-    """Own one run: generation, persisted checks, judge, and recoverable errors."""
+def generate_and_check(config, model_config, case, skill_content, skill_dir, run_id, run_dir, get_provider):
+    """Generate one run and persist its outputs and deterministic checks."""
     run_dir.mkdir(parents=True)
     model = model_config["model"]
     stage = "generation"
     try:
-        result = run_case(
-            provider=get_provider(model_config["provider"]), model=model,
-            **config["generation"], case=case, skill_content=skill_content,
-            run_id=run_id, run_dir=run_dir, skill_dir=skill_dir,
-            output_language=config.get("output_language", "ru"),
-        )
+        import tempfile
+        # Execute in a temporary workspace; persist artifacts, not duplicate
+        # dataset inputs or Skill resources, beneath runs/.
+        with tempfile.TemporaryDirectory(prefix="skill-run-") as temporary:
+            temporary_run = Path(temporary) / "run"
+            temporary_run.mkdir()
+            try:
+                result = run_case(
+                    provider=get_provider(model_config["provider"]), model=model,
+                    **config["generation"], case=case, skill_content=skill_content,
+                    run_id=run_id, run_dir=temporary_run, skill_dir=skill_dir,
+                    output_language=config.get("output_language", "ru"),
+                )
+            finally:
+                # Preserve partial outputs and diagnostics even on failure.
+                for artifact in temporary_run.iterdir():
+                    if artifact.name == "workspace":
+                        outputs = artifact / "outputs"
+                        if outputs.exists():
+                            destination = run_dir / "workspace" / "outputs"
+                            destination.parent.mkdir(parents=True, exist_ok=True)
+                            shutil.move(str(outputs), str(destination))
+                    else:
+                        shutil.move(str(artifact), str(run_dir / artifact.name))
+            result.workspace_dir = str(run_dir / "workspace")
+            result.outputs_dir = str(run_dir / "workspace" / "outputs")
         stage = "checks"
         checks = run_checks(result.output, case.checks, result.outputs_dir, case.expected_outputs)
         write_json(run_dir / "checks.json", checks)
-        stage = "evaluation"
+        write_json(run_dir / "status.json", {"status": "ready_for_evaluation"})
+    except Exception as exc:
+        error = {"stage": stage, "error": f"{type(exc).__name__}: {exc}"}
+        write_json(run_dir / "error.json", error)
+        write_json(run_dir / "status.json", {"status": "failed", "stage": stage})
+        print(f"Failed {stage}: {exc}")
+        return error
+    return None
+
+
+def evaluate_saved_run(config, case, run_dir, get_provider):
+    """Evaluate outputs persisted by phase 1 without invoking the generation model."""
+    try:
         judge = config["judge"]
         evaluation = evaluate_output(
             provider=get_provider(judge.get("provider", "openrouter")), judge_model=judge["model"],
             judge_temperature=judge["temperature"], judge_max_tokens=judge["max_tokens"],
-            case=case, output=result.output, outputs_dir=result.outputs_dir,
+            case=case, output="", outputs_dir=str(run_dir / "workspace" / "outputs"),
             output_language=config.get("output_language", "ru"),
             max_artifact_chars=judge.get("max_artifact_chars", 200000),
         )
@@ -289,10 +321,19 @@ def run_and_evaluate(config, model_config, case, skill_content, skill_dir, run_i
             "criteria": [asdict(item) for item in evaluation.criteria_scores],
             "total_score": evaluation.total_score, "max_score": evaluation.max_score,
         })
+        (run_dir / "error.json").unlink(missing_ok=True)
         write_json(run_dir / "status.json", {"status": "complete"})
     except Exception as exc:
-        error = {"stage": stage, "error": f"{type(exc).__name__}: {exc}"}
+        error = {"stage": "evaluation", "error": f"{type(exc).__name__}: {exc}"}
         write_json(run_dir / "error.json", error)
-        print(f"Failed {stage}: {exc}")
+        write_json(run_dir / "status.json", {"status": "failed", "stage": "evaluation"})
+        print(f"Failed evaluation: {exc}")
         return error
     return None
+
+
+def run_and_evaluate(config, model_config, case, skill_content, skill_dir, run_id, run_dir, get_provider):
+    """Backward-compatible single-run wrapper; benchmark orchestration uses two phases."""
+    error = generate_and_check(config, model_config, case, skill_content, skill_dir,
+                               run_id, run_dir, get_provider)
+    return error or evaluate_saved_run(config, case, run_dir, get_provider)

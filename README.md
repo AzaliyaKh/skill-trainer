@@ -27,13 +27,15 @@ HTTP/CLI. Тестовый релиз и синтетическое экспер
 |---|---|---|
 | `validate` | `checks.py` | `runs/validation/S/validation.json` |
 | `load-cases` / `validate-dataset` | `case.py` | `runs/dataset_validation/dev.json` |
-| `dev-benchmark` | `benchmark.py` → `runner.py` → `executor.py` | `results_dir/manifest.json`, per-run артефакты, `benchmark.json` |
-| `aggregate-dev` | `aggregate.py` | `results_dir/summary.json` |
-| `error-analysis` | `error_analysis.py` | `results_dir/error_analysis.json` |
-| `optimize` | `optimizer.py`, `review.py` | версии P/V, `R/optimization/S/V/optimization.json`, HTML, feedback |
+| `benchmark VERSION=V` | `benchmark.py` → `runner.py` → `executor.py` | `R/regression/S/V/raw/` |
+| `aggregate VERSION=V` | `aggregate.py` | `R/regression/S/V/summary.json` |
+| `error-analysis VERSION=V` | `error_analysis.py` | `R/regression/S/V/error_analysis.json` |
+| `optimize` | `optimizer.py`, `review.py` | версия P, предложенный кандидат в `R/optimization/S/V/candidate/`, optimization.json, HTML, feedback |
 | `optimize-review` | `review.py` через CLI optimizer | повторный export предложения |
-| `optimize-apply` | `optimizer.py` | рабочий `SKILL.md`, `R/optimization/S/V/applied.json` |
-| `regression` | `regression.py`, `benchmark.py` | `R/regression/S/{P,V}/raw/`, summary, анализ, validation; `regression.json` |
+| `approve` | `review.py` через CLI optimizer | подтверждённый `R/optimization/S/V/feedback.json` |
+| `optimize-apply` | `optimizer.py` | неизменяемая версия V, рабочий `SKILL.md`, `R/optimization/S/V/applied.json` |
+| `regression FROM=P TO=V` | `regression.py` | сравнение готовых summary P/V, `R/regression/S/P-to-V/regression.json` |
+| `next-version` | `storage.py` | обновляет в config пару lifecycle `vN → vN+1` |
 | `holdout` | `benchmark.py`, `aggregate.py`, `error_analysis.py` | `R/holdout/S/V/raw/`, summary, анализ, validation, `holdout.json` |
 | `review` | `review.py` | `R/review/S/V/index.html`, `index.json`, `feedback.json` |
 | `release` | `release.py` | `releases/S/V/` с ресурсами и `release.json` |
@@ -41,36 +43,62 @@ HTTP/CLI. Тестовый релиз и синтетическое экспер
 `storage.py` содержит общие операции с артефактами: атомарную запись JSON, хеши,
 пути этапов, чтение конфигурации и очистку. Он не выполняет модели или проверки качества.
 
-Полный цикл:
+Полный параметризованный цикл также приведён в [USAGE.md](USAGE.md):
 
 ```sh
 make validate load-cases test
-make dev-benchmark
-make aggregate-dev error-analysis
-make optimize
-# Проверьте runs/optimization/requirements-analysis/v1/index.html и заполните feedback.json.
+make benchmark VERSION=v0
+make aggregate VERSION=v0
+make error-analysis VERSION=v0
+make optimize VERSION=v0
+# Проверьте runs/optimization/requirements-analysis/v1/index.html.
+make approve
 make optimize-apply
-make regression
+make benchmark VERSION=v1
+make aggregate VERSION=v1
+make regression FROM=v0 TO=v1
 make holdout
 make review
 # Проверьте runs/review/requirements-analysis/v1/index.html и заполните feedback.json.
 make release
 ```
 
-`make work` выполняет проверки и DEV-этапы до создания предложения optimization,
-после чего останавливается для review. Benchmark, optimization, regression и holdout
-могут обращаться к платным моделям. `aggregate-dev`, `error-analysis` и `optimize`
-запускают необходимые предыдущие стадии через зависимости Make:
-`dev-benchmark → aggregate-dev → error-analysis → optimize`.
-Сами агрегация и анализ ошибок не вызывают LLM.
+`make work` выполняет проверки и явную последовательность стадий для текущей previous
+версии до создания optimization proposal. Только `benchmark`, optimization и holdout
+могут обращаться к моделям. `aggregate`, `error-analysis` и `regression` читают уже
+готовые артефакты и не имеют скрытых benchmark-зависимостей.
+
+После одобрения кандидата `make benchmark VERSION=v1` запускает модели только для
+`skill_versions/S/v1`; `make aggregate VERSION=v1` агрегирует эти результаты.
+`make regression FROM=v0 TO=v1` читает готовые `summary.json` обеих версий.
+
+Если regression не прошёл, задайте в конфигурации `previous_version: v1` и новую
+`candidate_version` командой `make next-version`, затем выполните
+`make error-analysis VERSION=v1`, а затем `make optimize VERSION=v1`.
+
+`make next-version` разрешён после regression текущей пары и требует существующую
+версию-кандидат. Например, для `v0/v1` он сохранит в `CONFIG` значения
+`previous_version: v1` и `candidate_version: v2`, не переписывая остальные настройки.
 
 Существующие результаты и версии не перезаписываются. Для нового эксперимента
 задайте новый `results_dir`; для следующего цикла — новые версии и `lifecycle.runs_dir`.
 Ошибки сохраняются в `error.json`, остальные запуски продолжаются. Завершённые выходы,
 usage и checks остаются на диске при ошибке судьи. Полностью завершённый DEV benchmark
-повторно используется при совпадении Skill, dataset и настроек; после неудачного
-прогона нужен новый каталог. OpenRouter повторяет временные ошибки с задержкой,
+повторно используется при совпадении Skill, dataset и настроек. OpenRouter повторяет временные ошибки с задержкой,
 учитывая `Retry-After`, но доступность модели после исчерпания повторов не гарантируется.
+
+Benchmark выполняется в две фазы. Сначала для всех моделей, кейсов и повторов выполняются
+генерация и deterministic checks; успешные запуски получают статус
+`ready_for_evaluation`. Только после окончания всей первой фазы фиксированный judge
+оценивает сохранённые результаты и переводит их в `complete`. Ошибка одной генерации
+не мешает остальным генерациям, а ошибка judge не удаляет outputs, usage или checks.
+При повторном `make benchmark VERSION=v0` (использует `--reuse`) ошибки стадии
+evaluation возобновляются только с judge. После ошибки generation повторяется только
+неудачный прогон в чистом workspace, затем выполняются checks и оценивание.
+Предыдущая попытка целиком сохраняется рядом с каталогом результатов:
+`raw-failed-attempts/<case-id>/<model>/run-01/attempt-01/`.
+Завершённые прогоны повторно не вызываются. При новом сбое команда возвращает ошибку;
+её можно запустить снова. Ошибки стадии checks автоматически не возобновляются.
 
 Технический сбой останавливает зависимые стадии. В `summary.json` поле `complete`
 означает полноту результатов, а `passed` — прохождение quality gates. Полные результаты
@@ -118,10 +146,13 @@ Evaluator читает реальные текстовые/SVG/JSON-выходы
 
 Optimization использует только DEV evidence, соответствующее предыдущему Skill и
 dataset. Ресурсы сохраняются; кандидат проходит `skills-ref`. HTML показывает причины,
-полный исходный/новый Skill и diff. В feedback для каждого `change_id` нужно заполнить
-`approved` (boolean) и `feedback`, затем установить `status: complete`.
+полный исходный/новый Skill и diff. После проверки всех изменений `make approve`
+проверяет соответствие feedback текущему evidence, устанавливает `approved: true` для
+каждого `change_id` и переводит `status` в `complete`. Существующие комментарии и
+дополнительные поля feedback сохраняются. Команда не запускается автоматически.
 
-`make optimize-apply` атомарно обновляет рабочий файл из `skill.path` либо
+До одобрения кандидат хранится в `runs/optimization/S/V/candidate/`; каталог
+`skill_versions/S/V` создаётся командой `make optimize-apply`. Она атомарно обновляет рабочий файл из `skill.path` либо
 `optimization.apply_path`. Нужно одобрить весь кандидат; частичное, отрицательное
 или устаревшее одобрение не применяется. Изменения рабочих файлов после создания
 предложения блокируют запись. `make optimize-review` сохраняет заполненный feedback.
@@ -136,6 +167,19 @@ Stage 9 аналогично создаёт pending feedback для каждог
 Release сверяет хеши кандидата и результатов, текущие gates и полное одобрение.
 `release.require_expert_review: false` явно снимает последнее требование; отчёт тогда
 содержит `expert_review_passed: null`, а не фиктивное одобрение.
+
+`make review` формирует одну сравнительную HTML-страницу и автоматически открывает
+`index.html` в активном окне VS Code через CLI и встроенный Simple Browser. Если VS Code
+CLI недоступен, команда сохраняет страницу и печатает путь для ручного открытия.
+Страница сгруппирована по split и кейсу: сначала показаны формулировка задачи, входные
+файлы и эталон, затем рядом расположены результаты всех моделей и повторов. Для каждого
+результата указаны модель, provider, доступные токены/стоимость/время и режим исполнения;
+полное содержимое текстовых результатов, SVG и изображений показано непосредственно,
+PDF встроен для просмотра, остальные форматы доступны по ссылке на исходный артефакт.
+Checks, оценка judge и результат предыдущей версии раскрываются рядом с ответом.
+Файлы генерации не копируются: HTML читает существующие данные из каталогов regression
+и holdout, а `index.json` хранит только пути и metadata. Формат и порядок заполнения
+`feedback.json` не изменились.
 
 ## Codex и очистка
 

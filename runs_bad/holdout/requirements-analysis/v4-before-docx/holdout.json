@@ -1,0 +1,49 @@
+{
+  "passed": true,
+  "skill_name": "requirements-analysis",
+  "version": "v4",
+  "candidate_digest": "7d65fabd56d5647371c5fa5baa1371db290d1b9cc0245b2cb221263e72d8c5f2",
+  "applied_gates": {
+    "min_score_mean": 80,
+    "min_checks_pass_rate": 1.0
+  },
+  "overall_scores": {
+    "case-206/gpt-5.6-luna": {
+      "confidence_level": 0.95,
+      "ci_low": null,
+      "ci_high": null,
+      "mean": 93.0,
+      "stddev": 0.0,
+      "min": 93.0,
+      "max": 93.0,
+      "ci95_low": null,
+      "ci95_high": null
+    },
+    "case-206/gpt-5.6-sol": {
+      "confidence_level": 0.95,
+      "ci_low": null,
+      "ci_high": null,
+      "mean": 95.0,
+      "stddev": 0.0,
+      "min": 95.0,
+      "max": 95.0,
+      "ci95_low": null,
+      "ci95_high": null
+    },
+    "case-206/gpt-5.6-terra": {
+      "confidence_level": 0.95,
+      "ci_low": null,
+      "ci_high": null,
+      "mean": 89.0,
+      "stddev": 0.0,
+      "min": 89.0,
+      "max": 89.0,
+      "ci95_low": null,
+      "ci95_high": null
+    }
+  },
+  "failed_cases": [],
+  "critical_failures": [],
+  "evidence_digest": "8fa22cb38d2d7af94474965355bb5c8c1a8fdd07b2315130a9a7f003afb34394",
+  "summary_digest": "ecfc5068691bbd033eec5313512c7358a361f250a99225d08af80fedff226d0a"
+}
