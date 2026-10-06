@@ -11,8 +11,9 @@ SKILL ?= skill/requirements-analysis
 # Empty uses dataset.path from CONFIG; DATASET remains an explicit override.
 DATASET ?=
 DATASET_REPORT ?= runs/dataset_validation/dev.json
+# Remove run results, generated requirements-analysis versions, and caches.
 # Override when generated artifacts use different project-local roots.
-CLEAN_DIRS ?= runs skill_versions releases build dist .pytest_cache .mypy_cache .ruff_cache htmlcov .coverage
+CLEAN_DIRS ?= runs runs_bad skill/versions/requirements-analysis build dist .pytest_cache .mypy_cache .ruff_cache htmlcov .coverage
 
 .PHONY: help work setup install validate skill-info load-cases validate-dataset benchmark aggregate error-analysis optimize regression next-version holdout review release test smoke check clean distclean optimize-review approve optimize-apply dev-benchmark aggregate-dev version-benchmark aggregate-version optimize-version
 

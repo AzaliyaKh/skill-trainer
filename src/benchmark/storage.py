@@ -141,7 +141,7 @@ def advance_lifecycle_config(config_path):
             "config": str(config_path)}
 
 
-DEFAULT_ARTIFACTS = ('runs', 'skill_versions', 'releases', 'build', 'dist',
+DEFAULT_ARTIFACTS = ('runs', 'runs_bad', 'skill/versions/requirements-analysis', 'build', 'dist',
                      '.pytest_cache', '.mypy_cache', '.ruff_cache', 'htmlcov', '.coverage')
 PROTECTED = ('src', 'tests', 'dataset', 'skill', 'config', '.git', '.codex', '.agents')
 
@@ -151,12 +151,16 @@ def clean(root, artifacts, environment, distclean=False):
     environment = root / environment
     targets = [root / path for path in artifacts]
     protected = [root / name for name in PROTECTED]
+    generated_versions = root / 'skill/versions/requirements-analysis'
     for target in [*targets, environment]:
         absolute = target.absolute()
         # Validate before deleting anything. Do not follow links outside the project.
         if '..' in target.parts or absolute == root or not absolute.is_relative_to(root):
             raise ValueError(f'Unsafe cleanup path: {target}')
-        if any(absolute == path or path.is_relative_to(absolute) or absolute.is_relative_to(path)
+        allowed_versions = (target in targets and target != environment and
+                            (absolute == generated_versions or absolute.is_relative_to(generated_versions)))
+        if any((absolute == path or path.is_relative_to(absolute) or absolute.is_relative_to(path))
+               and not (path == root / 'skill' and allowed_versions)
                for path in protected):
             raise ValueError(f'Cleanup overlaps source files: {target}')
         if any(parent.is_symlink() for parent in target.parents if parent != root):

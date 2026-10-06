@@ -419,7 +419,7 @@ class CleanupTests(unittest.TestCase):
         self.addCleanup(temporary.cleanup)
         self.root = Path(temporary.name)
         self.project = Path(__file__).resolve().parents[1]
-        for name in ('src/benchmark', 'tests', 'skill', 'dataset', 'config', '.venv', 'runs', 'skill_versions', 'releases'):
+        for name in ('src/benchmark', 'tests', 'skill', 'skill/requirements-analysis', 'skill/versions/requirements-analysis/v0', 'skill/versions/other/v0', 'dataset', 'config', '.venv', 'runs', 'runs_bad', 'skill_versions', 'releases'):
             path = self.root / name
             path.mkdir(parents=True, exist_ok=True)
             (path / 'keep.txt').write_text(name)
@@ -435,22 +435,26 @@ class CleanupTests(unittest.TestCase):
     def test_clean_keeps_environment_and_sources(self):
         self.make('clean')
         self.assertTrue((self.root / '.venv/keep.txt').exists())
-        for name in ('src/benchmark', 'tests', 'skill', 'dataset', 'config'):
+        for name in ('src/benchmark', 'tests', 'skill', 'skill/requirements-analysis', 'skill/versions/other/v0', 'dataset', 'config'):
             self.assertTrue((self.root / name / 'keep.txt').exists())
         self.assertTrue((self.root / '.env').exists())
-        for name in ('runs', 'skill_versions', 'releases', 'src/benchmark/__pycache__'):
+        for name in ('runs', 'runs_bad', 'skill/versions/requirements-analysis', 'src/benchmark/__pycache__'):
             self.assertFalse((self.root / name).exists())
+        for name in ('skill_versions', 'releases'):
+            self.assertTrue((self.root / name / 'keep.txt').exists())
         self.make('clean')
 
     def test_distclean_removes_artifacts_and_environment(self):
         self.make('distclean')
-        for name in ('runs', 'skill_versions', 'releases', '.venv'):
+        for name in ('runs', 'runs_bad', 'skill/versions/requirements-analysis', '.venv'):
             self.assertFalse((self.root / name).exists())
         self.assertTrue((self.root / 'skill/keep.txt').exists())
+        for name in ('skill_versions', 'releases'):
+            self.assertTrue((self.root / name / 'keep.txt').exists())
         self.make('distclean')
 
     def test_invalid_cleanup_paths_fail_before_deletion(self):
-        for target in ('.', '..', 'src', '.venv', 'dataset', '/'):
+        for target in ('.', '..', 'src', '.venv', 'dataset', 'skill', 'skill/versions', 'skill/requirements-analysis', 'skill/versions/other', '/'):
             with self.assertRaises(ValueError):
                 clean(self.root, ['runs', target], '.venv')
             self.assertTrue((self.root / 'runs/keep.txt').exists())
